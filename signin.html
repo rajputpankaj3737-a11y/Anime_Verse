@@ -8,10 +8,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
-    /* ---------- START: Responsive site CSS for index.html ---------- */
-
-/* base / reset */
-*{box-sizing:border-box;margin:0;padding:0}
+ 
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
 html,body{height:100%}
 body{
   font-family: 'Poppins', sans-serif;
@@ -41,9 +43,24 @@ header{
   backdrop-filter: blur(6px);
   border-radius:10px;
 }
-.logo{font-weight:800;color:#ff6b81;font-size:1.4rem}
-nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-nav a{color:#e2e8f0;text-decoration:none;font-weight:500;padding:6px 8px;border-radius:8px}
+.logo{
+  font-weight:800;
+  color:#ff6b81;
+  font-size:1.4rem
+}
+nav{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  flex-wrap:wrap
+}
+nav a{
+  color:#e2e8f0;
+  text-decoration:none;
+  font-weight:500;
+  padding:6px 8px;
+  border-radius:8px
+}
 nav a:hover{color:#ff6b81}
 
 /* hero */
@@ -61,36 +78,74 @@ nav a:hover{color:#ff6b81}
   min-height:320px;
 }
 .hero-left{max-width:700px}
-.hero h1{font-size:2.6rem;margin-bottom:12px}
-.hero p{color:#cbd5e1;max-width:640px;margin-bottom:18px}
-.cta{display:inline-block;padding:12px 26px;border-radius:30px;background:linear-gradient(90deg,#ff6b81,#7c5cff);color:#fff;font-weight:700;text-decoration:none}
+.hero h1{
+  font-size:2.6rem;
+  margin-bottom:12px
+}
+.hero p{
+  color:#cbd5e1;
+  max-width:640px;
+  margin-bottom:18px
+}
+.cta{
+  display:inline-block;
+  padding:12px 26px;
+  border-radius:30px;
+  background:linear-gradient(90deg,#ff6b81,#7c5cff);
+  color:#fff;
+  font-weight:700;
+  text-decoration:none
+}
 
-/* footer */
-footer{margin-top:30px;padding:18px;text-align:center;color:#94a3b8}
+footer{
+  margin-top:30px;
+  padding:18px;
+  text-align:center;
+  color:#94a3b8
+}
 
-/* small card/grid example (if present below hero) */
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:22px}
-.card{background:rgba(255,255,255,0.03);border-radius:12px;padding:0;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
-.cover{height:180px;background-size:cover;background-position:center}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-top:22px
+}
+.card{
+  background:rgba(255,255,255,0.03);
+  border-radius:12px;
+  padding:0;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.03)
+}
+.cover{
+  height:180px;
+  background-size:cover;
+  background-position:center
+}
 .card-body{padding:12px}
 
-/* social / buttons */
 button, .button{cursor:pointer}
-a.button{display:inline-block;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.03);text-decoration:none;color:inherit}
+a.button{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.03);
+  text-decoration:none;
+  color:inherit
+}
 
-/* images responsive */
-img{max-width:100%;height:auto;display:block}
+img{
+  max-width:100%;
+  height:auto;
+  display:block
+}
 
-/* ---------- RESPONSIVE QUERIES ---------- */
-
-/* Tablet and small laptops */
 @media (max-width:1000px){
   .grid{grid-template-columns:repeat(3,1fr)}
   .hero{min-height:300px;padding:36px 18px}
   .hero h1{font-size:2rem}
 }
 
-/* Large phones / small tablets */
 @media (max-width:760px){
   header{flex-direction:column;align-items:flex-start;padding:14px}
   nav{width:100%;gap:10px}
@@ -106,7 +161,6 @@ img{max-width:100%;height:auto;display:block}
   .grid{grid-template-columns:repeat(2,1fr)}
 }
 
-/* Mobile phones */
 @media (max-width:420px){
   .container{padding:12px}
   header{padding:12px}
@@ -119,11 +173,9 @@ img{max-width:100%;height:auto;display:block}
   .cta{width:100%;text-align:center;padding:12px}
   .grid{grid-template-columns:1fr}
   .card .cover{height:140px}
-  /* make buttons full width on mobile */
   .button, .cta{width:100%}
 }
 
-/* make social buttons behave */
 @media (max-width:480px){
   .social-buttons{display:flex;flex-direction:column;gap:10px}
   .social-buttons button{width:100%}
