@@ -76,7 +76,7 @@
     }
     .divider::before {left:0;}
     .divider::after {right:0;}
-    .social-buttons button {
+        .social-buttons button {
       width:100%;
       padding:10px;
       margin-bottom:12px;
@@ -108,6 +108,75 @@
 
 .social-buttons button:hover {
   background: #f1f1f1;
+}
+.google:hover {
+  background: #f1f1f1;
+}
+    .apple {
+      background:#fff;
+      color:#071023;
+      border:1px solid #ccc;
+    }
+    .facebook {
+      background:#3b5998;
+      color:#fff;
+    }
+    .footer {
+      margin-top:16px;
+      font-size:12px;
+      text-align:center;
+      color: var(--muted);
+    }
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero-text h1 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .hero-text p {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+    max-width: 300px;
+    margin: 10px auto;
+  }
+
+  .social-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .social-buttons button {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text h1 {
+    font-size: 18px;
+  }
+  .hero-text p {
+    font-size: 14px;
+  }
+}
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
   </style>
 </head>
