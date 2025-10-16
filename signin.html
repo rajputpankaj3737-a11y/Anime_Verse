@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - AnimeVerse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#ff6b81;
+      --muted:#98a0b3;
+      --radius:14px;
+      --max-width:400px;
+    }
+    * {box-sizing:border-box;}
+    body {
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#071023 0%, #081126 60%);
+      color: #e6eef8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .card {
+      background: var(--card);
+      padding: 32px 24px;
+      border-radius: var(--radius);
+      max-width: var(--max-width);
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.7);
+    }
+    h2 {margin-top:0;margin-bottom:16px;}
+    .input-group {margin-bottom:16px;}
+    label {display:block;margin-bottom:6px;font-weight:600;}
+    input[type=text], input[type=password] {
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.1);
+      background:rgba(255,255,255,0.02);
+      color: #e6eef8;
+      outline:none;
+    }
+    input[type=text]:focus, input[type=password]:focus {border-color: var(--accent);}
+    .btn {
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      background: linear-gradient(90deg,var(--accent),#7c5cff);
+      color:#071023;
+      font-weight:700;
+      cursor:pointer;
+      margin-top:12px;
+    }
+    .divider {
+      text-align:center;
+      margin:24px 0;
+      color: var(--muted);
+      position: relative;
+    }
+    .divider::before, .divider::after {
+      content:'';
+      position:absolute;
+      top:50%;
+      width:40%;
+      height:1px;
+      background: rgba(255,255,255,0.1);
+    }
+    .divider::before {left:0;}
+    .divider::after {right:0;}
+    .social-buttons button {
+      width:100%;
+      padding:10px;
+      margin-bottom:12px;
+      border-radius:8px;
+      border:none;
+      font-weight:600;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+    .google {background:#4285F4;color:#fff;}
+    .apple {background:#fff;color:#071023;border:1px solid #ccc;}
+    .facebook {background:#3b5998;color:#fff;}
+    .footer {margin-top:16px;font-size:12px;text-align:center;color: var(--muted);}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Sign In to AnimeVerse</h2>
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter username">
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password">
+    </div>
+    <button class="btn">Sign In</button><div class="divider">or</div>
+
+<div class="social-buttons">
+  <button class="google">Sign in with Google</button>
+  <button class="apple">Sign in with Apple</button>
+  <button class="facebook">Sign in with Facebook</button>
+</div>
+
+<div class="footer">© AnimeVerse 2025</div>
+
+  </div>
+</body>
+</html>
