@@ -220,20 +220,47 @@ img {
 <div class="divider">or</div>
 
 <div class="social-buttons">
-  <!-- Google -->
-  <button class="google">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.5 544.3" width="20" height="20">
-      <path fill="#4285F4" d="M533.5 278.4c0-17.6-1.5-34.6-4.3-51.2H272v97h146.9c-6.3 34.2-25 63.2-53.3 82.8v68h85.9c50.1-46.1 79-114.2 79-196.6z"/>
-      <path fill="#34A853" d="M272 544.3c71.6 0 131.7-23.8 175.6-64.7l-85.9-68c-23.9 16-54.5 25.3-89.7 25.3-69 0-127.5-46.5-148.5-109.1H36.3v68.5C80.6 491.8 170.7 544.3 272 544.3z"/>
-      <path fill="#FBBC04" d="M123.5 321.3c-5.7-17-9-35.2-9-53.8s3.3-36.8 9-53.8v-68.5H36.3C13.1 199.7 0 239.1 0 278.4s13.1 78.7 36.3 109.4l87.2-66.5z"/>
-      <path fill="#EA4335" d="M272 109.2c37.4 0 71 12.8 97.3 34.2l72.9-72.9C403.7 31.2 344.6 0 272 0 170.7 0 80.6 52.5 36.3 136.7l87.2 66.5c21-62.6 79.5-109 148.5-109z"/>
-    </svg>
-    Sign up with Google
-  </button>
+      <div id="g_id_onload"
+      data-client_id="313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com"
+      data-login_uri="https://rajputpankaj3737-a11y.github.io/kitsune/auth"
+      data-context="signin"
+      data-ux_mode="popup"
+      data-callback="handleCredentialResponse"
+      data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+    data-type="standard"
+    data-shape="rectangular"
+    data-theme="outline"
+    data-text="signin_with"
+    data-size="large"
+    data-logo_alignment="left">
+  </div>
+
 </div>
 
 <div class="footer">Already have an account? <a href="signin.html" style="color:var(--accent);text-decoration:none;font-weight:600;">Sign In</a></div>
 
   </div>
+  <script>
+  function handleCredentialResponse(response) {
+    // Decode the JWT token to see user info
+    const data = JSON.parse(atob(response.credential.split('.')[1]));
+    console.log("User data:", data);
+    alert("Welcome, " + data.name + "!\nYour email: " + data.email);
+  }
+  import { OAuth2Client } from "google-auth-library";
+const client = new OAuth2Client("313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com");
+
+async function verify(token) {
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: "313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com",
+  });
+  const payload = ticket.getPayload();
+  console.log(payload);
+}
+
+</script>
 </body>
 </html>
