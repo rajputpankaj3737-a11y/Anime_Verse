@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,18 +10,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:#0f1724;
-      --card:#0b1220;
-      --accent:#ff6b81;
-      --muted:#98a0b3;
-      --radius:14px;
-      --max-width:400px;
+      --bg: #0f1724;
+      --card: #0b1220;
+      --accent: #ff6b81;
+      --muted: #98a0b3;
+      --radius: 14px;
+      --max-width: 400px;
     }
-    * {box-sizing:border-box;}
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      margin:0;
+      margin: 0;
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#071023 0%, #081126 60%);
+      background: linear-gradient(180deg, #071023 0%, #081126 60%);
       color: #e6eef8;
       display: flex;
       justify-content: center;
@@ -27,240 +33,262 @@
       min-height: 100vh;
       padding: 16px;
     }
+
     .card {
       background: var(--card);
       padding: 32px 24px;
       border-radius: var(--radius);
       max-width: var(--max-width);
       width: 100%;
-      box-shadow: 0 10px 30px rgba(2,6,23,0.7);
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.7);
     }
+
     h2 {
-      margin-top:0;
-      margin-bottom:16px;
+      margin-top: 0;
+      margin-bottom: 16px;
     }
+
     .input-group {
-      margin-bottom:16px;
+      margin-bottom: 16px;
     }
+
     label {
-      display:block;
-      margin-bottom:6px;
-      font-weight:600;
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
     }
-    input[type=text], input[type=email], input[type=password] {
-      width:100%;
-      padding:10px 12px;
-      border-radius:8px;
-      border:1px solid rgba(255,255,255,0.1);
-      background:rgba(255,255,255,0.02);
+
+    input[type=text],
+    input[type=email],
+    input[type=password] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.02);
       color: #e6eef8;
-      outline:none;
+      outline: none;
     }
-    input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {border-color: var(--accent);}
+
+    input[type=text]:focus,
+    input[type=email]:focus,
+    input[type=password]:focus {
+      border-color: var(--accent);
+    }
+
     .btn {
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:8px;
-      background: linear-gradient(90deg,var(--accent),#7c5cff);
-      color:#071023;
-      font-weight:700;
-      cursor:pointer;
-      margin-top:12px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, var(--accent), #7c5cff);
+      color: #071023;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 12px;
     }
+
     .divider {
-      text-align:center;
-      margin:24px 0;
+      text-align: center;
+      margin: 24px 0;
       color: var(--muted);
       position: relative;
     }
-    .divider::before, .divider::after {
-      content:'';
-      position:absolute;
-      top:50%;
-      width:40%;
-      height:1px;
-      background: rgba(255,255,255,0.1);
-    }
-    .divider::before {left:0;}
-    .divider::after {right:0;}
-    .social-buttons button {
-      width:100%;
-      padding:10px;
-      margin-bottom:12px;
-      border-radius:8px;
-      border:none;
-      font-weight:600;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      gap:12px;
-    }
-    .social-buttons button {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  background: #fff;
-  color: #000;
-  transition: background 0.2s;
-}
 
-.social-buttons button:hover {
-  background: #f1f1f1;
-}
-.google:hover {
-  background: #f1f1f1;
-}
+    .divider::before,
+    .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .divider::before {
+      left: 0;
+    }
+
+    .divider::after {
+      right: 0;
+    }
+
+    .social-buttons button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+    }
+
+    .social-buttons button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      background: #fff;
+      color: #000;
+      transition: background 0.2s;
+    }
+
+    .social-buttons button:hover {
+      background: #f1f1f1;
+    }
+
+    .google:hover {
+      background: #f1f1f1;
+    }
+
     .apple {
-      background:#fff;
-      color:#071023;
-      border:1px solid #ccc;
+      background: #fff;
+      color: #071023;
+      border: 1px solid #ccc;
     }
+
     .facebook {
-      background:#3b5998;
-      color:#fff;
+      background: #3b5998;
+      color: #fff;
     }
+
     .footer {
-      margin-top:16px;
-      font-size:12px;
-      text-align:center;
+      margin-top: 16px;
+      font-size: 12px;
+      text-align: center;
       color: var(--muted);
     }
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: center;
-  }
 
-  nav ul {
-    flex-direction: column;
-    gap: 10px;
-  }
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: center;
+      }
 
-  .hero-text h1 {
-    font-size: 22px;
-    text-align: center;
-  }
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
 
-  .hero-text p {
-    font-size: 16px;
-    text-align: center;
-  }
+      .hero-text h1 {
+        font-size: 22px;
+        text-align: center;
+      }
 
-  button {
-    width: 100%;
-    max-width: 300px;
-    margin: 10px auto;
-  }
+      .hero-text p {
+        font-size: 16px;
+        text-align: center;
+      }
 
-  .social-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .social-buttons button {
-    width: 100%;
-    max-width: 280px;
-  }
-}
+      button {
+        width: 100%;
+        max-width: 300px;
+        margin: 10px auto;
+      }
 
-@media (max-width: 480px) {
-  .hero-text h1 {
-    font-size: 18px;
-  }
-  .hero-text p {
-    font-size: 14px;
-  }
-}
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+      .social-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .social-buttons button {
+        width: 100%;
+        max-width: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-text h1 {
+        font-size: 18px;
+      }
+
+      .hero-text p {
+        font-size: 14px;
+      }
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
   </style>
+  <!-- Google Sign-In SDK -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
+
 <body>
   <div class="card">
-    <h2>Create Account - Kitsune</h2><div class="input-group">
-  <label for="name">Full Name</label>
-  <input type="text" id="name" placeholder="Enter your full name">
-</div>
-
-<div class="input-group">
-  <label for="email">Email</label>
-  <input type="email" id="email" placeholder="Enter your email">
-</div>
-
-<div class="input-group">
-  <label for="username">Username</label>
-  <input type="text" id="username" placeholder="Choose a username">
-</div>
-
-<div class="input-group">
-  <label for="password">Password</label>
-  <input type="password" id="password" placeholder="Create password">
-</div>
-
-<div class="input-group">
-  <label for="confirm">Confirm Password</label>
-  <input type="password" id="confirm" placeholder="Confirm password">
-</div>
-
-<button class="btn">Sign Up</button>
-
-<div class="divider">or</div>
-
-<div class="social-buttons">
-      <div id="g_id_onload"
-      data-client_id="313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com"
-      data-login_uri="https://rajputpankaj3737-a11y.github.io/kitsune/auth"
-      data-context="signin"
-      data-ux_mode="popup"
-      data-callback="handleCredentialResponse"
-      data-auto_prompt="false">
+    <h2>Create Account - Kitsune</h2>
+    <div class="input-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="Enter your full name">
     </div>
-    <div class="g_id_signin"
-    data-type="standard"
-    data-shape="rectangular"
-    data-theme="outline"
-    data-text="signin_with"
-    data-size="large"
-    data-logo_alignment="left">
-  </div>
 
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email">
+    </div>
+
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Choose a username">
+    </div>
+
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Create password">
+    </div>
+
+    <div class="input-group">
+      <label for="confirm">Confirm Password</label>
+      <input type="password" id="confirm" placeholder="Confirm password">
+    </div>
+
+    <button class="btn">Sign Up</button>
+
+    <div class="divider">or</div>
+
+  <!-- Google Sign-Up -->
+<div id="g_id_onload"
+     data-client_id="313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com"
+     data-context="signup"
+     data-ux_mode="popup"
+     data-callback="handleCredentialResponse"
+     data-auto_prompt="false">
 </div>
 
-<div class="footer">Already have an account? <a href="signin.html" style="color:var(--accent);text-decoration:none;font-weight:600;">Sign In</a></div>
+<div class="g_id_signin"
+     data-type="standard"
+     data-shape="rectangular"
+     data-theme="outline"
+     data-text="signup_with"
+     data-size="large"
+     data-logo_alignment="left">
+</div>
+
+    <div class="footer">Already have an account? <a href="signin.html"
+        style="color:var(--accent);text-decoration:none;font-weight:600;">Sign In</a></div>
 
   </div>
   <script>
   function handleCredentialResponse(response) {
-    // Decode the JWT token to see user info
     const data = JSON.parse(atob(response.credential.split('.')[1]));
     console.log("User data:", data);
     alert("Welcome, " + data.name + "!\nYour email: " + data.email);
   }
-  import { OAuth2Client } from "google-auth-library";
-const client = new OAuth2Client("313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com");
-
-async function verify(token) {
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: "313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com",
-  });
-  const payload = ticket.getPayload();
-  console.log(payload);
-}
-
 </script>
 </body>
+
 </html>
