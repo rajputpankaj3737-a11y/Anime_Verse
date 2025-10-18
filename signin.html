@@ -8,6 +8,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
+     /* 🔥 Page transition animation */
+body {
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(10px); }
+}
+    /* ====== Base style ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
     :root {
       --bg:#0f1724;
       --card:#0b1220;
@@ -183,6 +209,7 @@ img {
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
+  
   <div class="card">
     <h2>Sign In to Kitsune</h2>
     <div class="input-group">
@@ -237,7 +264,94 @@ async function verify(token) {
   const payload = ticket.getPayload();
   console.log(payload);
 }
+function onLoginSuccess(name, email, picture) {
+  const userObj = {
+    name: name,
+    email: email,
+    username: '@' + name.toLowerCase().replace(/\s+/g,'_'),
+    avatar: picture || null
+  };
+  localStorage.setItem('kitsune_user', JSON.stringify(userObj));
+  window.location.href = 'home.html';
+}
 
+// Example for testing (you can link this to your actual form)
+document.getElementById('loginBtn').addEventListener('click', () => {
+  // Example data — replace with real values from login form or Google
+  onLoginSuccess('Pankaj Kumar', 'pankaj@example.com', '');
+});
+</script>
+<script>
+  // Fade-out before navigating away
+  document.querySelectorAll("a, button").forEach(el => {
+    el.addEventListener("click", e => {
+      const href = el.getAttribute("href") || el.getAttribute("onclick")?.match(/'(.+)'/)?.[1];
+      if (href && href.endsWith(".html")) {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(() => { window.location.href = href; }, 400);
+      }
+    });
+  });
+</script>
+<script>
+  // Example: simple sign-in using username/password form
+  document.querySelector('.btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    // read values (update selectors if different)
+    const username = document.getElementById('username')?.value || '';
+    const password = document.getElementById('password')?.value || '';
+
+    // TODO: Replace with real server validation. Right now this is a placeholder.
+    if (!username || !password) {
+      alert('Enter username and password');
+      return;
+    }
+
+    // Construct user object (in real app, use server response)
+    const user = {
+      name: username,                // replace with server name
+      email: username + '@local',    // placeholder (replace with real)
+      username: '@' + username,
+      avatar: null,                  // optional
+      provider: 'local'
+    };
+
+    // Save to localStorage and redirect to protected home
+    localStorage.setItem('kitsune_user', JSON.stringify(user));
+    document.body.classList.add('fade-out');
+    setTimeout(() => { window.location.href = 'home.html'; }, 300);
+  });
+</script>
+<script>
+function handleCredentialResponse(response) {
+  // Decode the JWT credential from Google
+  const data = parseJwt(response.credential);
+
+  // Extract user info
+  const user = {
+    name: data.name,
+    email: data.email,
+    username: '@' + data.given_name.toLowerCase(),
+    avatar: data.picture
+  };
+
+  // Save user info locally
+  localStorage.setItem('kitsune_user', JSON.stringify(user));
+
+  // Redirect to home page
+  window.location.href = 'home.html';
+}
+
+// Helper to decode JWT token from Google
+function parseJwt(token) {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    console.error('Error parsing JWT:', e);
+    return {};
+  }
+}
 </script>
 </body>
 </html>

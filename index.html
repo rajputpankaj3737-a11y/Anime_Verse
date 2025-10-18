@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kitsune — Anime World</title>
   <style>
+      /* 🔥 Page transition animation */
+body {
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(10px); }
+}
+    /* ====== Base style ====== */
     * {
       margin: 0;
       padding: 0;
@@ -86,6 +106,7 @@
       box-shadow: 0 4px 12px rgba(124, 92, 255, 0.5);
     }
 
+    /* ====== Hero section ====== */
     .hero {
       display: flex;
       justify-content: space-between;
@@ -110,7 +131,7 @@
       font-size: 3rem;
       margin-bottom: 15px;
       background: linear-gradient(90deg, #ff6b81, #7c5cff);
-      -webkit-background: text;
+      -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
@@ -178,18 +199,9 @@
 <body>
   <header>
     <div class="logo">Kitsune</div>
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Anime</a></li>
-        <li><a href="#">Manga</a></li>
-        <li><a href="#">Community</a></li>
-      </ul>
-    </nav>
+   <!-- public-only nav: put this into index.html -->
     <button class="signin-btn" onclick="window.location.href='signin.html'">Sign In</button>
   </header>
-
   <section class="hero">
     <div class="hero-text">
       <h1>Welcome to Kitsune — Your Anime Universe</h1>
@@ -197,14 +209,27 @@
         Explore, watch, and dive into the world of your favorite anime. Stay up-to-date with the
         latest episodes, news, and fan discussions.
       </p>
-      <button>Explore Now</button>
+      <button class=""signin-btn" onclick="window.location.href='signin.html'">Explore Now</button>
     </div>
     <img
-      src="./Image & logo/wp5203548.jpg"
+      src="Image & logo/wp5203548.jpg"
       alt="Anime"
     />
   </section>
 
   <footer>© 2025 Kitsune | All rights reserved.</footer>
+  <script>
+  // Fade-out before navigating away
+  document.querySelectorAll("a, button").forEach(el => {
+    el.addEventListener("click", e => {
+      const href = el.getAttribute("href") || el.getAttribute("onclick")?.match(/'(.+)'/)?.[1];
+      if (href && href.endsWith(".html")) {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(() => { window.location.href = href; }, 400);
+      }
+    });
+  });
+</script>
 </body>
 </html>

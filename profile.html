@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <script>
+  // Step 2: Auth Guard
+  (function() {
+    const user = localStorage.getItem('kitsune_user');
+    if (!user) {
+      // Not logged in → redirect to signin page
+      window.location.href = 'signin.html';
+    }
+  })();
+</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kitsune — Profile</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#98a0b3;
+      --accent1:#ff6b81;
+      --accent2:#7c5cff;
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      --max-width:1200px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg,#071023 0%, #081126 60%);
+      color:#e6eef8;
+      line-height:1.4;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:18px}
+
+    /* Header (simplified) */
+    header{
+      display:flex;align-items:center;justify-content:space-between;padding:14px 0;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo-img{
+      width:48px;height:48px;border-radius:10px;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;
+    }
+    .brand-title{font-weight:800;font-size:18px}
+    .brand-sub{font-size:12px;color:var(--muted);font-weight:600}
+    .btn-ghost{
+      padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);
+      background:transparent;color:var(--muted);cursor:pointer;
+    }
+
+    /* Profile Card */
+    .profile-container{
+      margin-top:40px;display:flex;flex-direction:column;align-items:center;text-align:center;
+      background:var(--glass);padding:32px;border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,0.05);
+      box-shadow:0 20px 40px rgba(2,6,23,0.6);
+      max-width:480px;margin-inline:auto;
+    }
+    .avatar-box{
+      position:relative;width:140px;height:140px;border-radius:50%;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      overflow:hidden;margin-bottom:16px;
+    }
+    .avatar-box img{
+      width:100%;height:100%;object-fit:cover;
+    }
+    .upload-btn{
+      position:absolute;bottom:0;right:0;background:rgba(0,0,0,0.6);
+      border:none;color:#fff;border-radius:50%;width:38px;height:38px;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;font-size:18px;
+    }
+    .profile-info h2{font-size:20px;font-weight:700;margin-bottom:4px}
+    .profile-info p{color:var(--muted);margin-bottom:6px;font-size:14px}
+    .profile-fields{
+      margin-top:18px;text-align:left;width:100%;
+    }
+    .field{
+      background:rgba(255,255,255,0.03);padding:12px 14px;border-radius:10px;
+      margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;
+      color:#e6eef8;font-size:14px;
+    }
+    .field label{color:var(--muted);font-size:13px}
+    .logout-btn{
+      margin-top:20px;padding:10px 16px;border-radius:12px;border:none;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      color:#071023;font-weight:800;cursor:pointer;
+      width:100%;
+    }
+    footer{margin-top:30px;padding:20px 0;text-align:center;color:var(--muted);font-size:13px}
+    @media(max-width:480px){
+      .profile-container{padding:22px}
+      .avatar-box{width:120px;height:120px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo-img"><img src="assets/images/logo-small.png" alt="Kitsune" onerror="this.style.display='none'"></div>
+        <div>
+          <div class="brand-title">Kitsune</div>
+          <div class="brand-sub">Profile</div>
+        </div>
+      </div>
+      <button class="btn-ghost" onclick="location.href='home.html'">🏠 Home</button>
+    </header>
+
+    <!-- Profile Card -->
+    <section class="profile-container">
+      <div class="avatar-box">
+        <img id="avatarPreview" src="assets/images/default-avatar.png" alt="User Avatar">
+        <input type="file" id="avatarInput" accept="image/*" style="display:none">
+        <button class="upload-btn" title="Change Photo" onclick="document.getElementById('avatarInput').click()">📷</button>
+      </div>
+
+      <div class="profile-info">
+        <h2 id="displayName">User Name</h2>
+        <p id="displayEmail">user@example.com</p>
+        <p id="displayUsername">@username</p>
+      </div>
+
+      <div class="profile-fields">
+        <div class="field"><label>Name:</label><span id="fieldName">User Name</span></div>
+        <div class="field"><label>Email:</label><span id="fieldEmail">user@example.com</span></div>
+        <div class="field"><label>Username:</label><span id="fieldUsername">@username</span></div>
+      </div>
+
+      <button class="logout-btn"  onclick="location.href='signin.html'">Logout</button>
+    </section>
+
+    <footer>
+      © 2025 Kitsune · Built for anime fans
+    </footer>
+  </div>
+  <img id="avatarPreview" src="" alt="Profile Picture" width="100">
+<h2 id="displayName"></h2>
+<p id="displayEmail"></p>
+<p id="displayUsername"></p>
+<img id="avatarPreview" src="default-avatar.png" alt="Profile Picture" width="100">
+<h2 id="displayName"></h2>
+<p id="displayEmail"></p>
+<p id="displayUsername"></p>
+<button id="logoutBtn">Logout</button>
+
+<button id="logoutBtn">Logout</button>
+
+  <script>
+    // Example: mock user data (replace with data from your auth system)
+    const user = {
+      name: "Pankaj Kumar",
+      email: "pankaj@example.com",
+      username: "@kitsune_pankaj",
+      avatar: localStorage.getItem("avatar") || "assets/images/default-avatar.png"
+    };
+
+    // Populate fields
+    document.getElementById("displayName").textContent = user.name;
+    document.getElementById("displayEmail").textContent = user.email;
+    document.getElementById("displayUsername").textContent = user.username;
+    document.getElementById("fieldName").textContent = user.name;
+    document.getElementById("fieldEmail").textContent = user.email;
+    document.getElementById("fieldUsername").textContent = user.username;
+    document.getElementById("avatarPreview").src = user.avatar;
+
+    // Handle profile picture upload
+    const avatarInput = document.getElementById("avatarInput");
+    avatarInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const imgSrc = evt.target.result;
+          document.getElementById("avatarPreview").src = imgSrc;
+          localStorage.setItem("avatar", imgSrc); // persist locally
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Logout button
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.clear();
+      alert("Logged out successfully!");
+      location.href = "login.html"; // redirect to login page
+    });
+  </script>
+ <script>
+const userRaw = localStorage.getItem('kitsune_user');
+if (!userRaw) {
+  window.location.href = 'signin.html';
+}
+const user = JSON.parse(userRaw);
+
+// Show user details
+document.getElementById('displayName').textContent = user.name || 'No Name';
+document.getElementById('displayEmail').textContent = user.email || 'No Email';
+document.getElementById('displayUsername').textContent = user.username || 'No Username';
+if (user.avatar) {
+  document.getElementById('avatarPreview').src = user.avatar;
+}
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem('kitsune_user');
+  window.location.href = 'index.html';
+});
+</script>
+<script>
+(function() {
+  const user = localStorage.getItem("kitsune_user");
+  if (!user) window.location.href = "signin.html";
+})();
+</script>
+</body>
+</html>

@@ -9,6 +9,25 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
+    /* 🔥 Page transition animation */
+body {
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(10px); }
+}
     :root {
       --bg: #0f1724;
       --card: #0b1220;
@@ -289,6 +308,69 @@
     alert("Welcome, " + data.name + "!\nYour email: " + data.email);
   }
 </script>
-</body>
+<script>
+  // Fade-out before navigating away
+  document.querySelectorAll("a, button").forEach(el => {
+    el.addEventListener("click", e => {
+      const href = el.getAttribute("href") || el.getAttribute("onclick")?.match(/'(.+)'/)?.[1];
+      if (href && href.endsWith(".html")) {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(() => { window.location.href = href; }, 400);
+      }
+    });
+  });
+</script>
+<script>
+  document.querySelector('.btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name')?.value || '';
+    const email = document.getElementById('email')?.value || '';
+    const username = document.getElementById('username')?.value || '';
 
+    if (!name || !email || !username) {
+      alert('Please fill required fields');
+      return;
+    }
+
+    // Normally send to your backend; for demo we save locally:
+    const user = {
+      name,
+      email,
+      username: '@' + username.replace(/\s+/g, '_'),
+      avatar: null,
+      provider: 'local'
+    };
+    localStorage.setItem('kitsune_user', JSON.stringify(user));
+    document.body.classList.add('fade-out');
+    setTimeout(() => { window.location.href = 'home.html'; }, 300);
+  });
+</script>
+<script>
+document.getElementById("signupForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  // Collect user data
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+
+  // Store user data (password only stored locally here — not secure for real use)
+  const user = {
+    name,
+    email,
+    username,
+    password,
+    avatar: "" // empty for now, can upload later
+  };
+
+  // Save to localStorage
+  localStorage.setItem("kitsune_user", JSON.stringify(user));
+
+  // Redirect to home page
+  window.location.href = "home.html";
+});
+</script>
+</body>
 </html>
