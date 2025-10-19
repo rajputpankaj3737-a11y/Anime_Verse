@@ -601,6 +601,66 @@
   from { transform: scale(0.85); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+/* ---------- Camera icon attached to avatar (strong specificity) ---------- */
+.profile-modal .avatar-box,
+.avatar-box {
+  position: relative !important;
+  display: inline-block;
+}
+
+.profile-modal .avatar-box img,
+.avatar-box img {
+  display: block;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* upload button attached to the avatar circle */
+.profile-modal .avatar-box .upload-btn,
+.avatar-box .upload-btn,
+#profileOverlay .avatar-box .upload-btn {
+  position: absolute !important;
+  bottom: 6px !important;
+  right: 6px !important;
+  z-index: 40 !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2)) !important;
+  color: #071023 !important;
+  border: none !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  box-shadow: 0 0 12px rgba(124,92,255,0.6) !important;
+  transition: transform .18s ease, box-shadow .18s ease !important;
+  outline: none !important;
+}
+
+/* hover */
+.profile-modal .avatar-box .upload-btn:hover,
+.avatar-box .upload-btn:hover {
+  transform: scale(1.08) !important;
+  box-shadow: 0 0 20px rgba(255,107,129,0.9) !important;
+}
+
+/* ensure button is not hidden by any parent */
+.profile-overlay,
+.profile-modal {
+  z-index: 2000;
+}
+#profileAvatar {
+  box-shadow: 0 0 12px rgba(124, 92, 255, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+#profileAvatar:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(255, 107, 129, 0.8);
+}
   </style>
 </head>
 <body>
@@ -651,7 +711,13 @@
         <div class="icons">
           <div class="icon-btn" id="exploreBtn" title="Explore">🔍</div>
           <div class="icon-btn" title="Community">💬</div>
-          <div class="icon-btn" id="profileBtn" title="Profile">👤</div>
+          <!-- 🧑‍💻 Dynamic user avatar -->
+<div class="icon-btn" id="profileBtn" title="Profile">
+  <img id="profileAvatar" 
+       src="assets/images/default-avatar.png" 
+       alt="Profile" 
+       style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;">
+</div>
           <div class="hamburger" id="hamburger" aria-label="menu" title="Menu">
             <span></span><span></span><span></span>
           </div>
@@ -882,11 +948,15 @@ window.addEventListener("popstate", () => {
   }
 });
 </script>
-<!-- ===== Profile Modal ===== -->
+<!-- Profile Modal -->
 <div class="profile-overlay" id="profileOverlay">
   <div class="profile-modal">
-    <button class="close-profile" id="closeProfile">✖</button>
-    <img id="modalAvatar" src="assets/images/default-avatar.png" alt="User Avatar">
+    <button class="close-profile" id="closeProfile">×</button>
+    <div class="avatar-box" style="position: relative;">
+      <img id="modalAvatar" src="assets/images/default-avatar.png" alt="User Avatar">
+      <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+      <button class="upload-btn" id="upload-btn" title="Change Photo" onclick="document.getElementById('avatarInput').click()">📷</button>
+    </div>
     <h2 id="modalName">User Name</h2>
     <p id="modalEmail">user@example.com</p>
     <p id="modalUsername">@username</p>
@@ -981,6 +1051,78 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     });
   });
 })();
+</script>
+<script>
+// ==== PROFILE MODAL FIX ====
+document.addEventListener("DOMContentLoaded", () => {
+  const profileBtn = document.getElementById("profileBtn");       // 👤 profile icon
+  const profileOverlay = document.getElementById("profileOverlay"); // overlay wrapper
+  const closeProfile = document.getElementById("closeProfile");     // × close button
+  const modalAvatar = document.getElementById("modalAvatar");       // profile picture
+
+  if (!profileBtn || !profileOverlay) return; // stop if structure missing
+
+  // Load saved avatar from localStorage (if any)
+  const savedAvatar = localStorage.getItem("avatar");
+  if (savedAvatar && modalAvatar) modalAvatar.src = savedAvatar;
+
+  // Open modal when clicking profile icon
+  profileBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    profileOverlay.style.display = "flex";
+    document.body.style.overflow = "hidden"; // lock scroll
+  });
+
+  // Close modal when pressing ×
+  if (closeProfile) {
+    closeProfile.addEventListener("click", () => {
+      profileOverlay.style.display = "none";
+      document.body.style.overflow = "auto"; // re-enable scroll
+    });
+  }
+
+  // Close modal when clicking outside the modal box
+  profileOverlay.addEventListener("click", (e) => {
+    if (e.target === profileOverlay) {
+      profileOverlay.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+  });
+
+  // Optional: handle avatar change (if upload button exists)
+  const avatarInput = document.getElementById("avatarInput");
+  if (avatarInput) {
+    avatarInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const imgSrc = evt.target.result;
+          modalAvatar.src = imgSrc;
+          localStorage.setItem("avatar", imgSrc); // save new avatar
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+});
+</script>
+<script>
+// ✅ Replace profile icon with user's avatar (if logged in)
+document.addEventListener('DOMContentLoaded', () => {
+  const userData = localStorage.getItem('kitsune_user');
+  const profileAvatar = document.getElementById('profileAvatar');
+
+  if (userData && profileAvatar) {
+    try {
+      const user = JSON.parse(userData);
+      // If user has a saved avatar (either from upload or Google), use it
+      profileAvatar.src = user.avatar || localStorage.getItem('avatar') || "assets/images/default-avatar.png";
+    } catch (err) {
+      console.error("Failed to parse user data:", err);
+    }
+  }
+});
 </script>
 </body>
 </html>
