@@ -9,6 +9,16 @@
   }
 </script>
 <script>
+  let startX = 0;
+  window.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+  window.addEventListener('touchmove', e => {
+    const diffX = e.touches[0].clientX - startX;
+    if (Math.abs(diffX) > 80) e.preventDefault(); // prevent swipe nav gesture
+  }, { passive: false });
+</script>
+<script>
   // Prevent two-finger swipe navigation on trackpads / touch devices
   window.addEventListener('wheel', (e) => {
     if (e.deltaX !== 0 && e.ctrlKey === false) {

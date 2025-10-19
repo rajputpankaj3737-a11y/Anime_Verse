@@ -9,6 +9,16 @@
     }
   }, { passive: false });
 </script>
+<script>
+  let startX = 0;
+  window.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+  window.addEventListener('touchmove', e => {
+    const diffX = e.touches[0].clientX - startX;
+    if (Math.abs(diffX) > 80) e.preventDefault(); // prevent swipe nav gesture
+  }, { passive: false });
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kitsune — Anime World</title>
