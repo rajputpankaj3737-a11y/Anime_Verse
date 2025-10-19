@@ -314,7 +314,57 @@
     /* subtle hover */
     .card:hover{transform:translateY(-6px);transition:transform .22s ease;box-shadow:0 12px 34px rgba(2,6,23,0.6)}
     .btn-primary:hover{transform:translateY(-4px);transition:transform .18s ease}
-    
+    /* 📱 Centered search bar with violet margin glow */
+@media (max-width: 760px) {
+  .search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: 12px auto;
+    padding: 12px 16px;
+    border-radius: 14px;
+
+    /* Violet outline + glowing edge */
+    border: 2px solid var(--accent2);
+    box-shadow:
+      0 0 8px rgba(124, 92, 255, 0.5),
+      0 0 16px rgba(124, 92, 255, 0.2);
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+  }
+
+  /* When user taps or focuses input */
+  .search:focus-within {
+    box-shadow:
+      0 0 12px var(--accent2),
+      0 0 28px var(--accent1);
+    transform: scale(1.02);
+  }
+
+  .search input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .search input::placeholder {
+    color: #d2cfff;
+    opacity: 1;
+  }
+
+  .search svg {
+    opacity: 0.9;
+    margin-left: 8px;
+  }
+}
   </style>
 </head>
 <body>
@@ -363,6 +413,7 @@
         </div>
 
         <div class="icons">
+          <div class="icon-btn" id="exploreBtn" title="Explore">🔍</div>
           <div class="icon-btn" title="Community">💬</div>
           <div class="icon-btn" id="profileBtn" title="Profile">👤</div>
           <div class="hamburger" id="hamburger" aria-label="menu" title="Menu">
@@ -379,10 +430,6 @@
           <div class="kicker">Featured</div>
           <h1>Welcome to Kitsune — your anime gateway</h1>
           <p>Discover trending anime and donghua. Browse by genre, see community ratings, and start watching instantly.</p>
-          <div class="hero-ctas">
-            <button class="btn-primary" onclick="location.href='#featured'">Browse Featured</button>
-            <button class="btn-ghost" onclick="document.getElementById('searchInput').focus()">Search</button>
-          </div>
         </div>
 
         <!-- optional decorative image -->
