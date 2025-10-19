@@ -774,5 +774,22 @@ document.addEventListener("touchmove", function (e) {
   }
 }, { passive: false });
 </script>
+<script>
+  // Prevent user from navigating back to previous site pages
+  window.addEventListener("load", () => {
+    // Push a new history state so that "back" won’t leave home instantly
+    history.pushState(null, "", location.href);
+  });
+
+  window.addEventListener("popstate", () => {
+    // If user tries to go back while staying on home screen, exit site
+    if (window.location.pathname.includes("index.html") || window.location.pathname === "/" ) {
+      window.location.href = "https://www.google.com"; // or your exit redirect
+    } else {
+      // Optional: redirect to home if they somehow go back on other pages
+      window.location.href = "index.html";
+    }
+  });
+</script>
 </body>
 </html>
