@@ -178,10 +178,41 @@
     nav ul li:nth-child(4){animation-delay:1.45s}
     nav ul li:nth-child(5){animation-delay:1.6s}
 
-    /* 📱 Responsive improvements */
-@media (max-width:1000px) {
+    /* 🌍 Default for large screens (Laptop / Desktop) */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 anime in one row */
+  gap: 16px;
+}
+
+/* 📱 For tablets and mobile screens */
+@media (max-width: 1024px) {
   .cards-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* medium devices */
+    gap: 14px;
+  }
+}
+
+/* 📱 For small mobile phones */
+@media (max-width: 600px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 anime per row */
+    gap: 12px;
+  }
+
+  .cards-grid .thumb {
+    aspect-ratio: 3 / 4; /* keeps perfect anime poster ratio */
+    object-fit: cover;
+  }
+
+  .cards-grid .card-title {
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .cards-grid .card-meta {
+    font-size: 11px;
+    text-align: center;
   }
 }
 
@@ -1299,7 +1330,7 @@ window.addEventListener('popstate', () => {
   const currentPage = window.location.pathname.split('/').pop();
   if (currentPage === 'home.html') {
     // If the user presses back on home page → exit site
-    window.location.replace('https://www.google.com'); // or your landing page (index.html)
+    window.location.replace('https://rajputpankaj3737-a11y.github.io/kitsune/');
   }
 });
 </script>
