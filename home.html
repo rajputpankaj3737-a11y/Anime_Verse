@@ -742,6 +742,43 @@
   color: #ff6b81;
   transform: scale(1.15);
 }
+/* 📱 Responsive fix for anime cards on mobile */
+@media (max-width: 768px) {
+  .anime-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    padding: 0 10px;
+  }
+
+  .anime-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .anime-card {
+    background: rgba(15, 23, 42, 0.7);
+    border-radius: 16px;
+    padding: 8px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .anime-card:hover {
+    transform: scale(1.02);
+  }
+
+  .anime-card h3 {
+    font-size: 0.9rem;
+    margin-top: 6px;
+  }
+
+  .anime-card .rating {
+    font-size: 0.8rem;
+  }
+}
   </style>
 </head>
 <body>
@@ -1255,6 +1292,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+</script>
+<script>
+// 🛡 Kickout only from Home page
+window.addEventListener('popstate', () => {
+  const currentPage = window.location.pathname.split('/').pop();
+  if (currentPage === 'home.html') {
+    // If the user presses back on home page → exit site
+    window.location.replace('https://www.google.com'); // or your landing page (index.html)
+  }
+});
+document.querySelectorAll("a, .anime-card").forEach(el => {
+  el.addEventListener("click", e => {
+    document.body.classList.add("fade-out");
+    setTimeout(() => { window.location = el.href; }, 300);
+  });
+});
 </script>
 </body>
 </html>

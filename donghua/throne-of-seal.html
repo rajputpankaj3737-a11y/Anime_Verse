@@ -25,7 +25,15 @@
     .hero{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}
     .poster{width:360px;border-radius:12px;box-shadow:0 20px 40px rgba(2,6,23,0.6)}
     .info{flex:1;min-width:260px}
-    h1{font-size:28px;margin:0 0 8px;background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    h1 {
+  font-size: 28px;
+  margin: 0 0 8px;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  background-clip: text;            /* Standard property */
+  -webkit-background-clip: text;    /* Safari/WebKit support */
+  color: transparent;               /* Fallback */
+  -webkit-text-fill-color: transparent;
+}
     .meta{color:var(--muted);margin-bottom:12px}
     .desc{line-height:1.6;color:#d7e2f7;margin-bottom:18px}
     .pill{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;color:var(--muted);font-size:13px}
@@ -56,5 +64,8 @@
       </div>
     </div>
   </div>
+  <script>
+    window.addEventListener('popstate', () => { window.location.replace('index.html'); });
+  </script>
 </body>
 </html>
