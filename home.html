@@ -178,21 +178,103 @@
     nav ul li:nth-child(4){animation-delay:1.45s}
     nav ul li:nth-child(5){animation-delay:1.6s}
 
-    /* responsive */
-    @media (max-width:1000px){ .cards-grid{grid-template-columns:repeat(3,1fr)} }
-    @media (max-width:760px){
-      .hero{min-height:300px}
-      .cards-grid{grid-template-columns:repeat(2,1fr)}
-      .logo-img{width:44px;height:44px}
-    }
-    @media (max-width:420px){
-      .cards-grid{grid-template-columns:1fr}
-      .hero-inner{flex-direction:column;align-items:flex-start;padding:20px}
-      .hero img{display:none}
-      .search{min-width:140px}
-      header{gap:10px}
-      .hamburger{order:3}
-    }
+    /* 📱 Responsive improvements */
+@media (max-width:1000px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width:760px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .hero {
+    flex-direction: column;
+    min-height: 280px;
+    text-align: center;
+    background-position: top center;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .hero-left {
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .search {
+    min-width: 160px;
+    width: 100%;
+  }
+}
+
+@media (max-width:480px) {
+  .wrap {
+    padding: 10px;
+  }
+
+  .hero {
+    min-height: 220px;
+    padding: 10px;
+  }
+
+  .hero-inner {
+    padding: 10px;
+  }
+
+  .hero h1 {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: 13px;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  footer {
+    font-size: 12px;
+    padding: 12px 0;
+  }
+
+  nav ul {
+    display: none; /* Hide desktop nav menu on mobile */
+  }
+}
 
     /* subtle hover */
     .card:hover{transform:translateY(-6px);transition:transform .22s ease;box-shadow:0 12px 34px rgba(2,6,23,0.6)}
@@ -423,6 +505,32 @@ if (profileBtn) {
 (function() {
   const user = localStorage.getItem("kitsune_user");
   if (!user) window.location.href = "signin.html";
+})();
+</script>
+<script>
+/* 🚫 Block back navigation and horizontal swipe gestures */
+(function() {
+  // Prevent browser back button
+  history.pushState(null, null, location.href);
+  window.onpopstate = function() {
+    // When user tries to go back — log out & redirect to landing page
+    localStorage.removeItem('kitsune_user');
+    alert('You’ve been logged out for security reasons.');
+    window.location.href = 'index.html';
+  };
+
+  // Prevent trackpad left/right swipe navigation (desktop)
+  window.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaX) > 0 && !e.ctrlKey) e.preventDefault();
+  }, { passive: false });
+
+  // Prevent swipe navigation (mobile)
+  let startX = 0;
+  window.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+  window.addEventListener('touchmove', e => {
+    const diffX = e.touches[0].clientX - startX;
+    if (Math.abs(diffX) > 80) e.preventDefault();
+  }, { passive: false });
 })();
 </script>
 </body>

@@ -150,41 +150,26 @@ body {
       right: 0;
     }
 
-    .social-buttons button {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 12px;
-    }
+    /* 💫 Center Google Sign-In / Sign-Up button */
+.google-signin-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  margin: 20px 0;
+}
 
-    .social-buttons button {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 12px;
-      background: #fff;
-      color: #000;
-      transition: background 0.2s;
-    }
+.google-signin-wrapper .g_id_signin {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100%;
+}
 
-    .social-buttons button:hover {
-      background: #f1f1f1;
-    }
-
+.google-signin-wrapper > div {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
     .google:hover {
       background: #f1f1f1;
     }
@@ -298,6 +283,7 @@ body {
     <div class="divider">or</div>
 
   <!-- Google Sign-Up -->
+<div class="google-signin-wrapper">   
 <div id="g_id_onload"
      data-client_id="313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com"
      data-context="signup"
@@ -313,6 +299,7 @@ body {
      data-text="signup_with"
      data-size="large"
      data-logo_alignment="left">
+</div>
 </div>
 
     <div class="footer">Already have an account? <a href="signin.html"
