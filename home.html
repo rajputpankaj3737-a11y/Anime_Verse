@@ -275,6 +275,41 @@
     display: none; /* Hide desktop nav menu on mobile */
   }
 }
+/* 💡 Align hamburger menu to top-right on mobile */
+@media (max-width: 760px) {
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    flex: 1;
+  }
+
+  /* Move hamburger to top-right corner */
+  .icons {
+    order: 3;
+    position: absolute;
+    top: 20px;
+    right: 18px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .hamburger {
+    background: var(--glass);
+    padding: 8px;
+    border-radius: 10px;
+  }
+
+  /* Center search bar below brand */
+  .search {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
 
     /* subtle hover */
     .card:hover{transform:translateY(-6px);transition:transform .22s ease;box-shadow:0 12px 34px rgba(2,6,23,0.6)}
