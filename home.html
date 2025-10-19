@@ -495,6 +495,112 @@
 .icons .icon-btn {
   animation: softPulse 2.4s infinite ease-in-out;
 }
+/* ===== Profile Modal Overlay ===== */
+.profile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(7, 10, 20, 0.7);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+/* ===== Profile Modal Overlay (Updated Glow Version) ===== */
+.profile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(7, 10, 20, 0.7);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Profile Card Modal */
+.profile-modal {
+  position: relative;
+  background: rgba(15, 20, 35, 0.95);
+  border-radius: 16px;
+  padding: 36px 26px 26px;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 25px rgba(124, 92, 255, 0.5), 0 0 45px rgba(255, 107, 129, 0.3);
+  animation: popupZoom 0.35s ease;
+}
+
+/* ✖ Close Button - now inside modal top-right corner */
+.close-profile {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+.close-profile:hover {
+  color: var(--accent1);
+  transform: scale(1.2);
+}
+
+.profile-modal img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 3px solid var(--accent1);
+  box-shadow: 0 0 15px var(--accent2);
+}
+
+.profile-modal h2 {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.profile-modal p {
+  color: var(--muted);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Logout Button */
+.profile-modal .logout-btn {
+  margin-top: 16px;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  color: #071023;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.profile-modal .logout-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px var(--accent1);
+}
+
+/* Animations */
+@keyframes popupZoom {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
   </style>
 </head>
 <body>
@@ -698,21 +804,6 @@
     // -- Side note: if you want the gate animation on navigation from signin/signup,
     // you can add document.body.classList.add('loaded') after the gate opens there.
   </script>
-  <script>
-const profileBtn = document.getElementById('profileBtn');
-
-if (profileBtn) {
-  profileBtn.addEventListener('click', e => {
-    e.preventDefault();
-    const user = localStorage.getItem('kitsune_user');
-    if (user) {
-      window.location.href = 'profile.html';
-    } else {
-      window.location.href = 'signin.html';
-    }
-  });
-}
-</script>
 <script>
 (function() {
   const user = localStorage.getItem("kitsune_user");
@@ -789,6 +880,56 @@ window.addEventListener("popstate", () => {
     // Optional fallback: redirect back to home if something else triggers popstate
     window.location.href = "index.html";
   }
+});
+</script>
+<!-- ===== Profile Modal ===== -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-modal">
+    <button class="close-profile" id="closeProfile">✖</button>
+    <img id="modalAvatar" src="assets/images/default-avatar.png" alt="User Avatar">
+    <h2 id="modalName">User Name</h2>
+    <p id="modalEmail">user@example.com</p>
+    <p id="modalUsername">@username</p>
+    <button class="logout-btn" id="logoutBtn">Logout</button>
+  </div>
+</div>
+<script>
+const profileOverlay = document.getElementById('profileOverlay');
+const closeProfile = document.getElementById('closeProfile');
+const profileIcon = document.getElementById('profileBtn');
+
+// Show profile modal when user clicks profile icon
+profileIcon.addEventListener('click', (e) => {
+  e.preventDefault();
+  const userRaw = localStorage.getItem('kitsune_user');
+  if (!userRaw) {
+    window.location.href = 'signin.html';
+    return;
+  }
+
+  const user = JSON.parse(userRaw);
+  document.getElementById('modalName').textContent = user.name || 'No Name';
+  document.getElementById('modalEmail').textContent = user.email || 'No Email';
+  document.getElementById('modalUsername').textContent = user.username || 'No Username';
+  document.getElementById('modalAvatar').src = user.avatar || 'assets/images/default-avatar.png';
+
+  profileOverlay.style.display = 'flex';
+});
+
+// Close when clicking X or outside the modal
+closeProfile.addEventListener('click', () => {
+  profileOverlay.style.display = 'none';
+});
+profileOverlay.addEventListener('click', (e) => {
+  if (e.target === profileOverlay) {
+    profileOverlay.style.display = 'none';
+  }
+});
+
+// Logout logic
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem('kitsune_user');
+  window.location.href = 'signin.html';
 });
 </script>
 </body>
