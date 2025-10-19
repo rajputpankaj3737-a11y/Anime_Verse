@@ -37,6 +37,46 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
   <style>
+    /* ✅ Keep icons aligned beside search bar only on mobile */
+@media (max-width: 760px) {
+  /* Wrap search bar and icons together neatly */
+  .search {
+    flex: 1;
+    min-width: auto;
+  }
+
+  .icons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 8px;
+  }
+
+  /* Keep them in one horizontal row */
+  header > div:last-child {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  /* Ensure hamburger stays at far right */
+  .hamburger {
+    margin-left: auto;
+  }
+
+  /* Slight padding adjustment for better spacing */
+  .search input {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  /* Prevent any wrapping under brand title */
+  .brand {
+    width: 100%;
+  }
+}
     :root{
       --bg:#0f1724;
       --card:#0b1220;
