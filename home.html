@@ -775,21 +775,21 @@ document.addEventListener("touchmove", function (e) {
 }, { passive: false });
 </script>
 <script>
-  // Prevent user from navigating back to previous site pages
-  window.addEventListener("load", () => {
-    // Push a new history state so that "back" won’t leave home instantly
-    history.pushState(null, "", location.href);
-  });
+window.addEventListener("load", () => {
+  // Add a fake state so back button won't immediately go to previous Kitsune pages
+  history.pushState(null, "", location.href);
+});
 
-  window.addEventListener("popstate", () => {
-    // If user tries to go back while staying on home screen, exit site
-    if (window.location.pathname.includes("index.html") || window.location.pathname === "/" ) {
-      window.location.href = "https://www.google.com"; // or your exit redirect
-    } else {
-      // Optional: redirect to home if they somehow go back on other pages
-      window.location.href = "index.html";
-    }
-  });
+window.addEventListener("popstate", () => {
+  // If the user is on home page and presses back → kick out of the site
+  if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
+    // Replace this with wherever you want them to go when leaving
+    window.location.replace("https://www.google.com"); 
+  } else {
+    // Optional fallback: redirect back to home if something else triggers popstate
+    window.location.href = "index.html";
+  }
+});
 </script>
 </body>
 </html>
