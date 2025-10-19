@@ -8,6 +8,14 @@
     window.location.href = 'home.html';
   }
 </script>
+<script>
+  // Prevent two-finger swipe navigation on trackpads / touch devices
+  window.addEventListener('wheel', (e) => {
+    if (e.deltaX !== 0 && e.ctrlKey === false) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In - Kitsune</title>
