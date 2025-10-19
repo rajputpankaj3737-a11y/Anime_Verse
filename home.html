@@ -192,31 +192,44 @@
     gap: 14px;
   }
 }
+/* 🎯 Responsive Anime Grid — Final Clean Version */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 💻 5 per row on laptop */
+  gap: 18px;
+  transition: all 0.3s ease;
+}
 
-/* 📱 For small mobile phones (Clean 2-in-a-row with glow border) */
-@media (max-width: 600px) {
+/* 🧠 Tablet view */
+@media (max-width: 1024px) {
   .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 per row */
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+  }
+}
+
+/* 📱 Mobile view (Perfect 2 per row) */
+@media (max-width: 768px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
     padding: 0 10px;
   }
 
-  /* 🟣 Card styling for mobile */
+  /* Card layout on mobile */
   .card {
-    background: rgba(15, 20, 35, 0.85);
-    border: 2px solid rgba(124, 92, 255, 0.4); /* purple border */
-    border-radius: 16px;
+    border: 2px solid rgba(124, 92, 255, 0.5);
+    border-radius: 14px;
+    background: rgba(15, 20, 35, 0.9);
     overflow: hidden;
-    box-shadow: 0 0 8px rgba(124, 92, 255, 0.2);
+    box-shadow: 0 0 10px rgba(124, 92, 255, 0.3);
     transition: all 0.3s ease;
   }
 
-  /* ✨ Hover/tap glow effect */
-  .card:active,
   .card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 16px rgba(124, 92, 255, 0.7), 0 0 28px rgba(255, 107, 129, 0.4);
+    transform: scale(1.04);
+    box-shadow: 0 0 16px rgba(124, 92, 255, 0.8),
+                0 0 28px rgba(255, 107, 129, 0.4);
     border-color: var(--accent2);
   }
 
@@ -224,18 +237,18 @@
     width: 100%;
     aspect-ratio: 3 / 4;
     object-fit: cover;
-    border-bottom: 2px solid rgba(124, 92, 255, 0.3);
+    border-bottom: 2px solid rgba(124, 92, 255, 0.4);
   }
 
   .card-body {
-    padding: 8px;
     text-align: center;
+    padding: 8px 4px;
   }
 
   .card-title {
     font-size: 13px;
-    font-weight: 600;
     color: #fff;
+    font-weight: 600;
     margin-bottom: 4px;
   }
 
@@ -248,9 +261,21 @@
   }
 
   .pill {
-    background: rgba(124, 92, 255, 0.15);
+    background: rgba(124, 92, 255, 0.2);
     border-radius: 999px;
     padding: 4px 8px;
+  }
+}
+
+/* 📱 Ultra-small devices (optional) */
+@media (max-width: 420px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .card {
+    border-radius: 10px;
   }
 }
 @keyframes softPulse {
