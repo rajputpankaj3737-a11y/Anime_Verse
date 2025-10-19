@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+// If user already signed in, skip signin/signup and go to home page
+(function() {
+  const existingUser = localStorage.getItem('kitsune_user');
+  if (existingUser) {
+    window.location.href = 'home.html';
+  }
+})();
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In - Kitsune</title>
@@ -94,5 +103,61 @@
       window.location.href = 'home.html';
     }
   </script>
+  <script>
+document.querySelector('.btn')?.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById('name')?.value?.trim();
+  const email = document.getElementById('email')?.value?.trim();
+  const usernameInput = document.getElementById('username')?.value?.trim();
+  const password = document.getElementById('password')?.value;
+
+  if (!name || !email || !usernameInput || !password) {
+    alert('Please fill required fields');
+    return;
+  }
+
+  // Build canonical user object
+  const user = {
+    name,
+    email,
+    phone: null,                // set if you collect phone number
+    username: '@' + usernameInput.replace(/\s+/g,'_'),
+    avatar: null,
+    provider: 'local'          // mark as local account
+  };
+
+  // Save user in localStorage (persists across sessions until removed)
+  localStorage.setItem('kitsune_user', JSON.stringify(user));
+
+  // Navigate to home
+  document.body.classList.add('fade-out');
+  setTimeout(() => { window.location.href = 'home.html'; }, 250);
+});
+</script>
+<script>
+function parseJwt(token) {
+  try { return JSON.parse(atob(token.split('.')[1])); }
+  catch(e){ return {}; }
+}
+
+function handleCredentialResponse(response) {
+  const data = parseJwt(response.credential);
+  // Normalize into the same user object shape
+  const user = {
+    name: data.name || (data.given_name ? (data.given_name + ' ' + (data.family_name||'')) : 'Google User'),
+    email: data.email || null,
+    username: data.given_name ? ('@' + data.given_name.toLowerCase()) : ('@' + (data.email || 'google_user').split('@')[0]),
+    avatar: data.picture || null,
+    provider: 'google'
+  };
+
+  // Persist - this is what keeps them logged in across visits
+  localStorage.setItem('kitsune_user', JSON.stringify(user));
+
+  // Redirect to protected home
+  window.location.href = 'home.html';
+}
+</script>
 </body>
 </html>
