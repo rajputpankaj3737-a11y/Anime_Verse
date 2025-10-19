@@ -127,51 +127,35 @@ body {
     }
     .divider::before {left:0;}
     .divider::after {right:0;}
-        .social-buttons button {
-      width:100%;
-      padding:10px;
-      margin-bottom:12px;
-      border-radius:8px;
-      border:none;
-      font-weight:600;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      gap:12px;
-    }
-    .social-buttons button {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-weight: 600;
-  cursor: pointer;
+    /* 🧭 Center Google Sign-In button properly */
+.google-signin-wrapper {
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  background: #fff;
-  color: #000;
-  transition: background 0.2s;
+  width: 75%;
+  margin: 20px 0;
 }
 
-.social-buttons button:hover {
-  background: #f1f1f1;
+.google-signin-wrapper .g_id_signin {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100%;
+}
+
+.google-signin-wrapper > div {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .google:hover {
   background: #f1f1f1;
 }
-    .apple {
-      background:#fff;
-      color:#071023;
-      border:1px solid #ccc;
-    }
-    .facebook {
-      background:#3b5998;
-      color:#fff;
-    }
     .footer {
       margin-top:16px;
       font-size:12px;
@@ -249,7 +233,7 @@ img {
 
     <div class="divider">or</div>
 
-    <div class="social-buttons">
+    <div class="google-signin-wrapper">
       <div id="g_id_onload"
       data-client_id="313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com"
       data-login_uri="https://rajputpankaj3737-a11y.github.io/kitsune/auth"
