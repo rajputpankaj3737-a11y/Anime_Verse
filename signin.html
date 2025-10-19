@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+  // If user already logged in, redirect them to home page
+  const existingUser = localStorage.getItem('kitsune_user');
+  if (existingUser) {
+    window.location.href = 'home.html';
+  }
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In - Kitsune</title>

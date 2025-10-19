@@ -111,7 +111,7 @@
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="logo-img"><img src="assets/images/logo-small.png" alt="Kitsune" onerror="this.style.display='none'"></div>
+        <div class="logo-img"><img src="./Image & logo/WhatsApp Image 2025-10-18 at 15.35.48_9c288ee5.jpg" alt="Kitsune" onerror="this.style.display='none'"></div>
         <div>
           <div class="brand-title">Kitsune</div>
           <div class="brand-sub">Profile</div>
@@ -140,85 +140,61 @@
         <div class="field"><label>Username:</label><span id="fieldUsername">@username</span></div>
       </div>
 
-      <button class="logout-btn"  onclick="location.href='signin.html'">Logout</button>
+      <button class="logout-btn"  onclick="location.href='signin.html'">Signout</button>
     </section>
 
     <footer>
       © 2025 Kitsune · Built for anime fans
     </footer>
   </div>
-  <img id="avatarPreview" src="" alt="Profile Picture" width="100">
-<h2 id="displayName"></h2>
-<p id="displayEmail"></p>
-<p id="displayUsername"></p>
-<img id="avatarPreview" src="default-avatar.png" alt="Profile Picture" width="100">
-<h2 id="displayName"></h2>
-<p id="displayEmail"></p>
-<p id="displayUsername"></p>
-<button id="logoutBtn">Logout</button>
-
-<button id="logoutBtn">Logout</button>
-
   <script>
-    // Example: mock user data (replace with data from your auth system)
-    const user = {
-      name: "Pankaj Kumar",
-      email: "pankaj@example.com",
-      username: "@kitsune_pankaj",
-      avatar: localStorage.getItem("avatar") || "assets/images/default-avatar.png"
-    };
+  const userRaw = localStorage.getItem('kitsune_user');
+  if (!userRaw) {
+    window.location.href = 'signin.html';
+  }
+  const user = JSON.parse(userRaw);
+  document.getElementById("displayName").textContent = user.name || "No Name";
+  document.getElementById("displayEmail").textContent = user.email || "No Email";
+  document.getElementById("displayUsername").textContent = user.username
+    ? (user.username.startsWith("@") ? user.username : "@" + user.username)
+    : "@NoUsername";
 
-    // Populate fields
-    document.getElementById("displayName").textContent = user.name;
-    document.getElementById("displayEmail").textContent = user.email;
-    document.getElementById("displayUsername").textContent = user.username;
-    document.getElementById("fieldName").textContent = user.name;
-    document.getElementById("fieldEmail").textContent = user.email;
-    document.getElementById("fieldUsername").textContent = user.username;
+  document.getElementById("fieldName").textContent = user.name || "No Name";
+  document.getElementById("fieldEmail").textContent = user.email || "No Email";
+  document.getElementById("fieldUsername").textContent = user.username
+    ? (user.username.startsWith("@") ? user.username : "@" + user.username)
+    : "@NoUsername";
+
+  // ✅ Avatar
+  if (user.avatar) {
     document.getElementById("avatarPreview").src = user.avatar;
+  } else {
+    document.getElementById("avatarPreview").src = "assets/images/default-avatar.png";
+  }
 
-    // Handle profile picture upload
-    const avatarInput = document.getElementById("avatarInput");
-    avatarInput.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          const imgSrc = evt.target.result;
-          document.getElementById("avatarPreview").src = imgSrc;
-          localStorage.setItem("avatar", imgSrc); // persist locally
-        };
-        reader.readAsDataURL(file);
-      }
-    });
+  // ✅ Step 3: Allow profile image upload & save to localStorage
+  const avatarInput = document.getElementById("avatarInput");
+  avatarInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const imgSrc = evt.target.result;
+        document.getElementById("avatarPreview").src = imgSrc;
+        user.avatar = imgSrc;
+        localStorage.setItem("kitsune_user", JSON.stringify(user)); // update avatar in user data
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
-    // Logout button
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      localStorage.clear();
-      alert("Logged out successfully!");
-      location.href = "login.html"; // redirect to login page
-    });
-  </script>
- <script>
-const userRaw = localStorage.getItem('kitsune_user');
-if (!userRaw) {
-  window.location.href = 'signin.html';
-}
-const user = JSON.parse(userRaw);
-
-// Show user details
-document.getElementById('displayName').textContent = user.name || 'No Name';
-document.getElementById('displayEmail').textContent = user.email || 'No Email';
-document.getElementById('displayUsername').textContent = user.username || 'No Username';
-if (user.avatar) {
-  document.getElementById('avatarPreview').src = user.avatar;
-}
-
-// Logout
-document.getElementById('logoutBtn').addEventListener('click', () => {
-  localStorage.removeItem('kitsune_user');
-  window.location.href = 'index.html';
-});
+  // ✅ Step 4: Logout logic
+  const logoutBtn = document.querySelector(".logout-btn");
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("kitsune_user");
+    alert("Logged out successfully!");
+    window.location.href = "signin.html";
+  });
 </script>
 <script>
 (function() {
