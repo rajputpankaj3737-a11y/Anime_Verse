@@ -1,366 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-  // If user already logged in, redirect them to home page
-  const existingUser = localStorage.getItem('kitsune_user');
-  if (existingUser) {
-    window.location.href = 'home.html';
-  }
-</script>
-<script>
-  let startX = 0;
-  window.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-  });
-  window.addEventListener('touchmove', e => {
-    const diffX = e.touches[0].clientX - startX;
-    if (Math.abs(diffX) > 80) e.preventDefault(); // prevent swipe nav gesture
-  }, { passive: false });
-</script>
-<script>
-  // Prevent two-finger swipe navigation on trackpads / touch devices
-  window.addEventListener('wheel', (e) => {
-    if (e.deltaX !== 0 && e.ctrlKey === false) {
-      e.preventDefault();
-    }
-  }, { passive: false });
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In - Kitsune</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
   <style>
-     /* 🔥 Page transition animation */
-body {
-  opacity: 0;
-  animation: fadeIn 0.6s ease forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-out {
-  animation: fadeOut 0.5s ease forwards;
-}
-
-@keyframes fadeOut {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(10px); }
-}
-    /* ====== Base style ====== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-    }
-    :root {
-      --bg:#0f1724;
-      --card:#0b1220;
-      --accent:#ff6b81;
-      --muted:#98a0b3;
-      --radius:14px;
-      --max-width:400px;
-    }
-    * {box-sizing:border-box;}
-    body {
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#071023 0%, #081126 60%);
-      color: #e6eef8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 16px;
-    }
-    .card {
-      background: var(--card);
-      padding: 32px 24px;
-      border-radius: var(--radius);
-      max-width: var(--max-width);
-      width: 100%;
-      box-shadow: 0 10px 30px rgba(2,6,23,0.7);
-    }
+    body {font-family: Inter, sans-serif; background: linear-gradient(180deg,#071023 0%,#081126 60%);
+      display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; color: #e6eef8;}
+    .card {background:#0b1220;padding:32px 24px;border-radius:14px;max-width:400px;width:100%;
+      box-shadow:0 10px 30px rgba(2,6,23,0.7);}
     h2 {margin-top:0;margin-bottom:16px;}
-    .input-group {margin-bottom:16px;}
     label {display:block;margin-bottom:6px;font-weight:600;}
-    input[type=text], input[type=password] {
-      width:100%;
-      padding:10px 12px;
-      border-radius:8px;
-      border:1px solid rgba(255,255,255,0.1);
-      background:rgba(255,255,255,0.02);
-      color: #e6eef8;
-      outline:none;
-    }
-    input[type=text]:focus, input[type=password]:focus {border-color: var(--accent);}
-    .btn {
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:8px;
-      background: linear-gradient(90deg,var(--accent),#7c5cff);
-      color:#071023;
-      font-weight:700;
-      cursor:pointer;
-      margin-top:12px;
-    }
-    .divider {
-      text-align:center;
-      margin:24px 0;
-      color: var(--muted);
-      position: relative;
-    }
-    .divider::before, .divider::after {
-      content:'';
-      position:absolute;
-      top:50%;
-      width:40%;
-      height:1px;
-      background: rgba(255,255,255,0.1);
-    }
-    .divider::before {left:0;}
-    .divider::after {right:0;}
-    /* 🧭 Center Google Sign-In button properly */
-.google-signin-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 75%;
-  margin: 20px 0;
-}
-
-.google-signin-wrapper .g_id_signin {
-  display: flex !important;
-  justify-content: center !important;
-  width: 100%;
-}
-
-.google-signin-wrapper > div {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.google:hover {
-  background: #f1f1f1;
-}
-    .footer {
-      margin-top:16px;
-      font-size:12px;
-      text-align:center;
-      color: var(--muted);
-    }
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  nav ul {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .hero-text h1 {
-    font-size: 22px;
-    text-align: center;
-  }
-
-  .hero-text p {
-    font-size: 16px;
-    text-align: center;
-  }
-
-  button {
-    width: 100%;
-    max-width: 300px;
-    margin: 10px auto;
-  }
-
-  .social-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .social-buttons button {
-    width: 100%;
-    max-width: 280px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-text h1 {
-    font-size: 18px;
-  }
-  .hero-text p {
-    font-size: 14px;
-  }
-}
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+    input {width:100%;padding:10px 12px;margin-bottom:14px;border-radius:8px;
+      border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:#fff;}
+    input:focus {border-color:#ff6b81;outline:none;}
+    .btn {width:100%;padding:12px;border:none;border-radius:8px;background:linear-gradient(90deg,#ff6b81,#7c5cff);
+      color:#071023;font-weight:700;cursor:pointer;}
+    .divider {text-align:center;margin:20px 0;color:#98a0b3;position:relative;}
+    .divider::before,.divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;
+      background:rgba(255,255,255,0.1);} .divider::before{left:0;} .divider::after{right:0;}
+    .footer{text-align:center;margin-top:16px;font-size:13px;color:#98a0b3;}
+    .google-signin-wrapper{display:flex;justify-content:center;margin:20px 0;}
   </style>
- <!-- Google Sign-In Script -->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-  
   <div class="card">
     <h2>Sign In to Kitsune</h2>
-    <div class="input-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" placeholder="Enter username">
-    </div>
-    <div class="input-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter password">
-    </div>
-    <button class="btn">Sign In</button>
+
+    <label>Email or Phone</label>
+    <input type="text" id="loginId" placeholder="Enter email or phone">
+
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter password">
+
+    <button class="btn" id="loginBtn">Sign In</button>
 
     <div class="divider">or</div>
 
+    <!-- Google Sign-In (unchanged) -->
     <div class="google-signin-wrapper">
       <div id="g_id_onload"
-      data-client_id="313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com"
-      data-login_uri="https://rajputpankaj3737-a11y.github.io/kitsune/auth"
-      data-context="signin"
-      data-ux_mode="popup"
-      data-callback="handleCredentialResponse"
-      data-auto_prompt="false">
+        data-client_id="313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="handleCredentialResponse"
+        data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin" data-type="standard" data-theme="outline" data-text="signin_with"></div>
     </div>
-    <div class="g_id_signin"
-    data-type="standard"
-    data-shape="rectangular"
-    data-theme="outline"
-    data-text="signin_with"
-    data-size="large"
-    data-logo_alignment="left">
+
+    <div class="footer">
+      Don’t have an account?
+      <a href="signup.html" style="color:#ff6b81;text-decoration:none;font-weight:600;">Sign Up</a>
+    </div>
   </div>
 
-</div>
-
-    <div class="footer">Don't have an account? <a href="signup.html" style="color:var(--accent);text-decoration:none;font-weight:600;">Sign Up</a></div>
-  </div>
   <script>
-  function handleCredentialResponse(response) {
-    // Decode the JWT token to see user info
-    const data = JSON.parse(atob(response.credential.split('.')[1]));
-    console.log("User data:", data);
-    alert("Welcome, " + data.name + "!\nYour email: " + data.email);
-  }
-  import { OAuth2Client } from "google-auth-library";
-const client = new OAuth2Client("313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com");
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const loginId = document.getElementById('loginId').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
 
-async function verify(token) {
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: "313330582001-705egcef1ef656lmqb5i7qmkb4n5t6at.apps.googleusercontent.com",
-  });
-  const payload = ticket.getPayload();
-  console.log(payload);
-}
-function onLoginSuccess(name, email, picture) {
-  const userObj = {
-    name: name,
-    email: email,
-    username: '@' + name.toLowerCase().replace(/\s+/g,'_'),
-    avatar: picture || null
-  };
-  localStorage.setItem('kitsune_user', JSON.stringify(userObj));
-  window.location.href = 'home.html';
-}
-
-// Example for testing (you can link this to your actual form)
-document.getElementById('loginBtn').addEventListener('click', () => {
-  // Example data — replace with real values from login form or Google
-  onLoginSuccess('Pankaj Kumar', 'pankaj@example.com', '');
-});
-</script>
-<script>
-  // Fade-out before navigating away
-  document.querySelectorAll("a, button").forEach(el => {
-    el.addEventListener("click", e => {
-      const href = el.getAttribute("href") || el.getAttribute("onclick")?.match(/'(.+)'/)?.[1];
-      if (href && href.endsWith(".html")) {
-        e.preventDefault();
-        document.body.classList.add("fade-out");
-        setTimeout(() => { window.location.href = href; }, 400);
+      if (!loginId || !password) {
+        alert("Enter all fields."); return;
       }
+
+      const users = JSON.parse(localStorage.getItem("kitsune_users") || "[]");
+      const user = users.find(u => (u.email === loginId || u.phone === loginId) && u.password === password);
+
+      if (!user) {
+        alert("Invalid credentials."); return;
+      }
+
+      localStorage.setItem("kitsune_user", JSON.stringify(user));
+      window.location.href = "home.html";
     });
-  });
-</script>
-<script>
-  // Example: simple sign-in using username/password form
-  document.querySelector('.btn')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    // read values (update selectors if different)
-    const username = document.getElementById('username')?.value || '';
-    const password = document.getElementById('password')?.value || '';
 
-    // TODO: Replace with real server validation. Right now this is a placeholder.
-    if (!username || !password) {
-      alert('Enter username and password');
-      return;
+    // Google callback (unchanged)
+    function handleCredentialResponse(response) {
+      const data = JSON.parse(atob(response.credential.split('.')[1]));
+      const user = {
+        name: data.name,
+        email: data.email,
+        phone: null,
+        username: '@' + data.given_name.toLowerCase(),
+        avatar: data.picture,
+        provider: 'google'
+      };
+      localStorage.setItem('kitsune_user', JSON.stringify(user));
+      window.location.href = 'home.html';
     }
-
-    // Construct user object (in real app, use server response)
-    const user = {
-      name: username,                // replace with server name
-      email: username + '@local',    // placeholder (replace with real)
-      username: '@' + username,
-      avatar: null,                  // optional
-      provider: 'local'
-    };
-
-    // Save to localStorage and redirect to protected home
-    localStorage.setItem('kitsune_user', JSON.stringify(user));
-    document.body.classList.add('fade-out');
-    setTimeout(() => { window.location.href = 'home.html'; }, 300);
-  });
-</script>
-<script>
-function handleCredentialResponse(response) {
-  // Decode the JWT credential from Google
-  const data = parseJwt(response.credential);
-
-  // Extract user info
-  const user = {
-    name: data.name,
-    email: data.email,
-    username: '@' + data.given_name.toLowerCase(),
-    avatar: data.picture
-  };
-
-  // Save user info locally
-  localStorage.setItem('kitsune_user', JSON.stringify(user));
-
-  // Redirect to home page
-  window.location.href = 'home.html';
-}
-
-// Helper to decode JWT token from Google
-function parseJwt(token) {
-  try {
-    return JSON.parse(atob(token.split('.')[1]));
-  } catch (e) {
-    console.error('Error parsing JWT:', e);
-    return {};
-  }
-}
-</script>
+  </script>
 </body>
 </html>
