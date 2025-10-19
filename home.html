@@ -314,55 +314,7 @@
     /* subtle hover */
     .card:hover{transform:translateY(-6px);transition:transform .22s ease;box-shadow:0 12px 34px rgba(2,6,23,0.6)}
     .btn-primary:hover{transform:translateY(-4px);transition:transform .18s ease}
-    /* 📱 Mobile layout fix — move icons beside search bar */
-@media (max-width: 760px) {
-
-  /* Make the container for search & icons */
-  header > div:last-child {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 6px;
-  }
-
-  /* Search bar expands to take available width */
-  .search {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-width: 0;
-  }
-
-  .search input {
-    width: 100%;
-  }
-
-  /* Icons stay on right side of search bar */
-  .icons {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* Hamburger stays at far right */
-  .hamburger {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Adjust spacing a bit */
-  header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .brand {
-    width: 100%;
-    margin-bottom: 6px;
-  }
-}
+    
   </style>
 </head>
 <body>
@@ -390,7 +342,7 @@
         </div>
         <div>
           <div class="brand-title">Kitsune</div>
-          <div class="brand-sub">Anime • Donghua • Community</div>
+          <div class="brand-sub">Anime & Donghua</div>
         </div>
       </div>
 
@@ -411,7 +363,6 @@
         </div>
 
         <div class="icons">
-          <div class="icon-btn" title="Explore" id="exploreBtn">🔍</div>
           <div class="icon-btn" title="Community">💬</div>
           <div class="icon-btn" id="profileBtn" title="Profile">👤</div>
           <div class="hamburger" id="hamburger" aria-label="menu" title="Menu">
