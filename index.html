@@ -250,5 +250,34 @@ body {
     });
   });
 </script>
+<script>
+/* 🛡 Prevent user from navigating back from home */
+window.addEventListener("pageshow", function (event) {
+  // If the page was loaded from back/forward cache (bfcache)
+  if (event.persisted) {
+    window.location.href = "logout.html"; // fallback if browser restores session
+  }
+});
+
+// Disable back button navigation
+window.history.pushState(null, null, window.location.href);
+window.onpopstate = function () {
+  // When user presses back or slides back gesture
+  window.history.pushState(null, null, window.location.href);
+  alert("🚫 For security reasons, you’ve been logged out!");
+  localStorage.removeItem("kitsune_user");
+  window.location.href = "signin.html"; // redirect to sign-in or landing page
+};
+
+// Optional: block swipe gestures on touch devices (trackpad or finger)
+document.addEventListener("touchmove", function (e) {
+  if (window.innerWidth < 800 && e.touches.length > 1) {
+    e.preventDefault();
+    alert("⚠ Swipe-back disabled for security!");
+    localStorage.removeItem("kitsune_user");
+    window.location.href = "signin.html";
+  }
+}, { passive: false });
+</script>
 </body>
 </html>

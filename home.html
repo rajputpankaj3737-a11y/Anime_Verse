@@ -365,6 +365,103 @@
     margin-left: 8px;
   }
 }
+/* ✨ Universal glowing search bar — desktop + mobile */
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  padding: 10px 16px;
+  border-radius: 14px;
+
+  /* Violet border + gradient glow */
+  border: 2px solid var(--accent2);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 0 8px rgba(124, 92, 255, 0.4),
+    0 0 16px rgba(255, 107, 129, 0.2);
+
+  transition: all 0.3s ease;
+}
+
+/* 🌈 Glow intensifies on focus */
+.search:focus-within {
+  box-shadow:
+    0 0 12px var(--accent2),
+    0 0 24px var(--accent1);
+  transform: scale(1.02);
+  border-color: var(--accent1);
+}
+
+/* 📝 Input text style */
+.search input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Placeholder glow */
+.search input::placeholder {
+  color: #d2cfff;
+  text-shadow: 0 0 6px rgba(124, 92, 255, 0.4);
+}
+
+/* Magnifying icon */
+.search svg {
+  opacity: 0.9;
+  margin-left: 8px;
+}
+
+/* 📱 Center for mobile */
+@media (max-width: 760px) {
+  .search {
+    width: 90%;
+    margin: 12px auto;
+  }
+}
+/* ✨ Glowing icons (Search, Community, Profile) */
+.icons .icon-btn {
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 6px rgba(124, 92, 255, 0.2);
+  border: 1px solid rgba(124, 92, 255, 0.15);
+}
+
+/* Glow when hovered or focused */
+.icons .icon-btn:hover,
+.icons .icon-btn:focus-within {
+  box-shadow:
+    0 0 8px rgba(124, 92, 255, 0.6),
+    0 0 16px rgba(255, 107, 129, 0.3);
+  transform: scale(1.08);
+  border-color: var(--accent1);
+}
+
+/* Gentle pulse glow animation */
+@keyframes softPulse {
+  0% {
+    box-shadow: 0 0 6px rgba(124, 92, 255, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(124, 92, 255, 0.6),
+      0 0 18px rgba(255, 107, 129, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 6px rgba(124, 92, 255, 0.4);
+  }
+}
+
+/* Apply subtle continuous glow */
+.icons .icon-btn {
+  animation: softPulse 2.4s infinite ease-in-out;
+}
   </style>
 </head>
 <body>
@@ -614,6 +711,35 @@ if (profileBtn) {
     if (Math.abs(diffX) > 80) e.preventDefault();
   }, { passive: false });
 })();
+</script>
+<script>
+/* 🛡 Prevent user from navigating back from home */
+window.addEventListener("pageshow", function (event) {
+  // If the page was loaded from back/forward cache (bfcache)
+  if (event.persisted) {
+    window.location.href = "logout.html"; // fallback if browser restores session
+  }
+});
+
+// Disable back button navigation
+window.history.pushState(null, null, window.location.href);
+window.onpopstate = function () {
+  // When user presses back or slides back gesture
+  window.history.pushState(null, null, window.location.href);
+  alert("🚫 For security reasons, you’ve been logged out!");
+  localStorage.removeItem("kitsune_user");
+  window.location.href = "signin.html"; // redirect to sign-in or landing page
+};
+
+// Optional: block swipe gestures on touch devices (trackpad or finger)
+document.addEventListener("touchmove", function (e) {
+  if (window.innerWidth < 800 && e.touches.length > 1) {
+    e.preventDefault();
+    alert("⚠ Swipe-back disabled for security!");
+    localStorage.removeItem("kitsune_user");
+    window.location.href = "signin.html";
+  }
+}, { passive: false });
 </script>
 </body>
 </html>
