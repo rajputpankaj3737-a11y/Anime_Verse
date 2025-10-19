@@ -37,46 +37,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    /* ✅ Keep icons aligned beside search bar only on mobile */
-@media (max-width: 760px) {
-  /* Wrap search bar and icons together neatly */
-  .search {
-    flex: 1;
-    min-width: auto;
-  }
-
-  .icons {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-left: 8px;
-  }
-
-  /* Keep them in one horizontal row */
-  header > div:last-child {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-  }
-
-  /* Ensure hamburger stays at far right */
-  .hamburger {
-    margin-left: auto;
-  }
-
-  /* Slight padding adjustment for better spacing */
-  .search input {
-    font-size: 14px;
-    width: 100%;
-  }
-
-  /* Prevent any wrapping under brand title */
-  .brand {
-    width: 100%;
-  }
-}
     :root{
       --bg:#0f1724;
       --card:#0b1220;
@@ -354,6 +314,55 @@
     /* subtle hover */
     .card:hover{transform:translateY(-6px);transition:transform .22s ease;box-shadow:0 12px 34px rgba(2,6,23,0.6)}
     .btn-primary:hover{transform:translateY(-4px);transition:transform .18s ease}
+    /* 📱 Mobile layout fix — move icons beside search bar */
+@media (max-width: 760px) {
+
+  /* Make the container for search & icons */
+  header > div:last-child {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 6px;
+  }
+
+  /* Search bar expands to take available width */
+  .search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .search input {
+    width: 100%;
+  }
+
+  /* Icons stay on right side of search bar */
+  .icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Hamburger stays at far right */
+  .hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Adjust spacing a bit */
+  header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .brand {
+    width: 100%;
+    margin-bottom: 6px;
+  }
+}
   </style>
 </head>
 <body>
