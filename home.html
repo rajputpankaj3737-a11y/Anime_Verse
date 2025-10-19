@@ -178,14 +178,63 @@
     nav ul li:nth-child(4){animation-delay:1.45s}
     nav ul li:nth-child(5){animation-delay:1.6s}
 
-   /* 🎯 Final Responsive Anime Grid Layout */
+ /* ====== Unified cards grid + mobile fix ====== */
+/* Desktop: 5 per row */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 💻 5 per row on desktop */
+  grid-template-columns: repeat(5, 1fr);
   gap: 18px;
+  align-items: start;
+  padding: 0;
+}
+/* 💜 Violet Margin & Glow Effect (Laptop / Desktop Only) */
+@media (min-width: 1025px) {
+  .card {
+    position: relative;
+    border: 2px solid rgba(124, 92, 255, 0.35); /* violet margin */
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    overflow: hidden;
+    box-shadow: 0 0 8px rgba(124, 92, 255, 0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  /* ✨ Glow when hovered */
+  .card:hover {
+    transform: translateY(-6px) scale(1.03);
+    border-color: var(--accent2);
+    box-shadow:
+      0 0 12px rgba(124, 92, 255, 0.6),
+      0 0 24px rgba(255, 107, 129, 0.3);
+  }
+
+  /* 🔥 Active (click / press) effect */
+  .card:active {
+    transform: scale(0.98);
+    box-shadow:
+      0 0 18px rgba(124, 92, 255, 0.8),
+      0 0 36px rgba(255, 107, 129, 0.4);
+    border-color: var(--accent1);
+  }
+
+  /* 🎨 Slight text emphasis on hover */
+  .card:hover .card-title {
+    color: var(--accent2);
+    text-shadow: 0 0 6px rgba(124, 92, 255, 0.4);
+  }
+
+  /* keep nice ratio for posters */
+  .thumb {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-size: cover !important;
+    background-position: center center !important;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
 }
 
-/* 📱 Tablets */
+/* Tablet: 3 per row */
 @media (max-width: 1024px) {
   .cards-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -193,69 +242,72 @@
   }
 }
 
-/* 📱 Mobiles — exactly 2 anime per row */
+/* Mobile: 2 per row (exactly) */
 @media (max-width: 768px) {
   .cards-grid {
-    grid-template-columns: repeat(2, 1fr); /* ✅ 2 per row */
+    grid-template-columns: repeat(2, 1fr); /* ← EXACTLY 2 per row on mobile */
     gap: 14px;
-    padding: 0 10px;
+    padding: 0 12px; /* small horizontal padding */
   }
 
+  /* card visual (mobile-friendly) */
   .card {
-    background: rgba(15, 20, 35, 0.9);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     border-radius: 14px;
-    border: 2px solid rgba(124, 92, 255, 0.4);
     overflow: hidden;
-    box-shadow: 0 0 8px rgba(124, 92, 255, 0.3);
-    transition: all 0.3s ease;
+    border: 2px solid rgba(124, 92, 255, 0.25); /* purple margin */
+    box-shadow: 0 6px 18px rgba(7, 10, 20, 0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
   }
 
-  .card:hover,
-  .card:active {
-    transform: scale(1.03);
-    box-shadow: 0 0 16px rgba(124, 92, 255, 0.7), 0 0 28px rgba(255, 107, 129, 0.4);
+  .card:focus-within,
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 34px rgba(7, 10, 20, 0.6), 0 0 18px rgba(124,92,255,0.25);
     border-color: var(--accent2);
   }
 
+  /* For thumb (you used background-image inline) - keep consistent poster ratio */
   .thumb {
     width: 100%;
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
-    border-bottom: 2px solid rgba(124, 92, 255, 0.3);
+    aspect-ratio: 3 / 4; /* poster style */
+    background-size: cover !important;
+    background-position: center center !important;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
   }
 
   .card-body {
-    padding: 8px;
+    padding: 10px;
     text-align: center;
+    display: block;
   }
 
   .card-title {
     font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
     color: #fff;
-    font-weight: 600;
   }
 
   .card-meta {
-    font-size: 11px;
-    color: #cfcaff;
-    display: flex;
-    justify-content: center;
-    gap: 6px;
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    font-size: 12px;
+    color: var(--muted);
+    align-items:center;
   }
 
-  .pill {
-    background: rgba(124, 92, 255, 0.15);
-    border-radius: 999px;
-    padding: 3px 8px;
-  }
+  .pill { padding:4px 8px; font-size:11px; border-radius:999px; background: rgba(124,92,255,0.12); }
 }
 
-/* 📱 Very small phones (e.g. <400px width) */
+/* Very small phones keep 2-per-row but reduce gaps */
 @media (max-width: 420px) {
-  .cards-grid {
-    grid-template-columns: repeat(2, 1fr); /* still 2 */
-    gap: 10px;
-  }
+  .cards-grid { gap: 10px; padding: 0 8px; }
+  .card-title { font-size: 12px }
 }
 @keyframes softPulse {
   0% { box-shadow: 0 0 8px rgba(124, 92, 255, 0.2); }
@@ -359,7 +411,7 @@
 /* For very small phones (optional) */
 @media (max-width: 480px) {
   .cards-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 
