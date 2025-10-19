@@ -932,5 +932,55 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
   window.location.href = 'signin.html';
 });
 </script>
+<script>
+(function() {
+  // URL where user will be sent when they press "back" from Home
+  const EXIT_URL = " https://rajputpankaj3737-a11y.github.io/kitsune/"; // <- change this to your preferred exit page
+
+  // When Home loads, push a history state so the first "back" triggers popstate here
+  function initBackInterceptor() {
+    try {
+      // push a state so the back button first pops to this state
+      history.pushState({kitsuneHome: true}, "", location.href);
+
+      // add a second state to avoid some browser corner-cases with bfcache
+      history.pushState({kitsuneHome2: true}, "", location.href);
+    } catch (e) {
+      // ignore if browser blocks pushState
+      console.warn("history.pushState blocked", e);
+    }
+  }
+
+  // popstate handler: when a back happens, redirect out (do NOT clear localStorage)
+  function onPop(e) {
+    // If the state object matches our home states, redirect out
+    // We check pathname to be safe (some browsers don't provide state).
+    const isOnHomePath = window.location.pathname.includes("index.html") || window.location.pathname === "/" || document.title.toLowerCase().includes("home");
+    if (isOnHomePath) {
+      // Use replace so the EXIT_URL becomes the current entry (no extra history)
+      window.location.replace(EXIT_URL);
+    } else {
+      // If for some reason popstate fired on non-home, just go to home
+      window.location.href = "index.html";
+    }
+  }
+
+  // init on load
+  window.addEventListener("load", () => {
+    initBackInterceptor();
+
+    // Listen for popstate (back/forward navigation, swipe gestures)
+    window.addEventListener("popstate", onPop, {passive: true});
+
+    // Extra: handle Android physical back via visibilitychange fallback (optional)
+    // (Some Android WebViews behave differently; popstate should normally fire.)
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        // nothing destructive here — just a safe hook if you want extra handling
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>
