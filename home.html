@@ -193,27 +193,73 @@
   }
 }
 
-/* 📱 For small mobile phones */
+/* 📱 For small mobile phones (Clean 2-in-a-row with glow border) */
 @media (max-width: 600px) {
   .cards-grid {
-    grid-template-columns: repeat(2, 2fr); /* 2 anime per row */
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 per row */
+    gap: 16px;
+    padding: 0 10px;
   }
 
-  .cards-grid .thumb {
-    aspect-ratio: 3 / 4; /* keeps perfect anime poster ratio */
+  /* 🟣 Card styling for mobile */
+  .card {
+    background: rgba(15, 20, 35, 0.85);
+    border: 2px solid rgba(124, 92, 255, 0.4); /* purple border */
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 8px rgba(124, 92, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  /* ✨ Hover/tap glow effect */
+  .card:active,
+  .card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 16px rgba(124, 92, 255, 0.7), 0 0 28px rgba(255, 107, 129, 0.4);
+    border-color: var(--accent2);
+  }
+
+  .thumb {
+    width: 100%;
+    aspect-ratio: 3 / 4;
     object-fit: cover;
+    border-bottom: 2px solid rgba(124, 92, 255, 0.3);
   }
 
-  .cards-grid .card-title {
-    font-size: 12px;
+  .card-body {
+    padding: 8px;
     text-align: center;
   }
 
-  .cards-grid .card-meta {
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .card-meta {
     font-size: 11px;
-    text-align: center;
+    color: #cfcaff;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
   }
+
+  .pill {
+    background: rgba(124, 92, 255, 0.15);
+    border-radius: 999px;
+    padding: 4px 8px;
+  }
+}
+@keyframes softPulse {
+  0% { box-shadow: 0 0 8px rgba(124, 92, 255, 0.2); }
+  50% { box-shadow: 0 0 16px rgba(124, 92, 255, 0.6); }
+  100% { box-shadow: 0 0 8px rgba(124, 92, 255, 0.2); }
+}
+.card:hover {
+  animation: softPulse 1.5s infinite ease-in-out;
 }
 
 @media (max-width:760px) {
