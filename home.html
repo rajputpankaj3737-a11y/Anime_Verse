@@ -303,6 +303,32 @@
 
   .pill { padding:4px 8px; font-size:11px; border-radius:999px; background: rgba(124,92,255,0.12); }
 }
+/* 🎯 Fix uneven anime card ratio on all devices */
+.cards-grid {
+  align-items: stretch; /* ensures all same height in row */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.thumb {
+  width: 100%;
+  aspect-ratio: 3 / 4;        /* same poster shape everywhere */
+  background-size: cover !important;
+  background-position: center center !important;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+}
+
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 /* Very small phones keep 2-per-row but reduce gaps */
 @media (max-width: 420px) {
@@ -1139,78 +1165,6 @@
   if (!user) window.location.href = "signin.html";
 })();
 </script>
-<script>
-/* 🚫 Block back navigation and horizontal swipe gestures */
-(function() {
-  // Prevent browser back button
-  history.pushState(null, null, location.href);
-  window.onpopstate = function() {
-    // When user tries to go back — log out & redirect to landing page
-    localStorage.removeItem('kitsune_user');
-    alert('You’ve been logged out for security reasons.');
-    window.location.href = 'index.html';
-  };
-
-  // Prevent trackpad left/right swipe navigation (desktop)
-  window.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaX) > 0 && !e.ctrlKey) e.preventDefault();
-  }, { passive: false });
-
-  // Prevent swipe navigation (mobile)
-  let startX = 0;
-  window.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-  window.addEventListener('touchmove', e => {
-    const diffX = e.touches[0].clientX - startX;
-    if (Math.abs(diffX) > 80) e.preventDefault();
-  }, { passive: false });
-})();
-</script>
-<script>
-/* 🛡 Prevent user from navigating back from home */
-window.addEventListener("pageshow", function (event) {
-  // If the page was loaded from back/forward cache (bfcache)
-  if (event.persisted) {
-    window.location.href = "logout.html"; // fallback if browser restores session
-  }
-});
-
-// Disable back button navigation
-window.history.pushState(null, null, window.location.href);
-window.onpopstate = function () {
-  // When user presses back or slides back gesture
-  window.history.pushState(null, null, window.location.href);
-  alert("🚫 For security reasons, you’ve been logged out!");
-  localStorage.removeItem("kitsune_user");
-  window.location.href = "signin.html"; // redirect to sign-in or landing page
-};
-
-// Optional: block swipe gestures on touch devices (trackpad or finger)
-document.addEventListener("touchmove", function (e) {
-  if (window.innerWidth < 800 && e.touches.length > 1) {
-    e.preventDefault();
-    alert("⚠ Swipe-back disabled for security!");
-    localStorage.removeItem("kitsune_user");
-    window.location.href = "signin.html";
-  }
-}, { passive: false });
-</script>
-<script>
-window.addEventListener("load", () => {
-  // Add a fake state so back button won't immediately go to previous Kitsune pages
-  history.pushState(null, "", location.href);
-});
-
-window.addEventListener("popstate", () => {
-  // If the user is on home page and presses back → kick out of the site
-  if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
-    // Replace this with wherever you want them to go when leaving
-    window.location.replace(" https://rajputpankaj3737-a11y.github.io/kitsune/"); 
-  } else {
-    // Optional fallback: redirect back to home if something else triggers popstate
-    window.location.href = "index.html";
-  }
-});
-</script>
 <!-- Profile Modal -->
 <div class="profile-overlay" id="profileOverlay">
   <div class="profile-modal">
@@ -1264,56 +1218,6 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
   localStorage.removeItem('kitsune_user');
   window.location.href = 'signin.html';
 });
-</script>
-<script>
-(function() {
-  // URL where user will be sent when they press "back" from Home
-  const EXIT_URL = " https://rajputpankaj3737-a11y.github.io/kitsune/"; // <- change this to your preferred exit page
-
-  // When Home loads, push a history state so the first "back" triggers popstate here
-  function initBackInterceptor() {
-    try {
-      // push a state so the back button first pops to this state
-      history.pushState({kitsuneHome: true}, "", location.href);
-
-      // add a second state to avoid some browser corner-cases with bfcache
-      history.pushState({kitsuneHome2: true}, "", location.href);
-    } catch (e) {
-      // ignore if browser blocks pushState
-      console.warn("history.pushState blocked", e);
-    }
-  }
-
-  // popstate handler: when a back happens, redirect out (do NOT clear localStorage)
-  function onPop(e) {
-    // If the state object matches our home states, redirect out
-    // We check pathname to be safe (some browsers don't provide state).
-    const isOnHomePath = window.location.pathname.includes("index.html") || window.location.pathname === "/" || document.title.toLowerCase().includes("home");
-    if (isOnHomePath) {
-      // Use replace so the EXIT_URL becomes the current entry (no extra history)
-      window.location.replace(EXIT_URL);
-    } else {
-      // If for some reason popstate fired on non-home, just go to home
-      window.location.href = "index.html";
-    }
-  }
-
-  // init on load
-  window.addEventListener("load", () => {
-    initBackInterceptor();
-
-    // Listen for popstate (back/forward navigation, swipe gestures)
-    window.addEventListener("popstate", onPop, {passive: true});
-
-    // Extra: handle Android physical back via visibilitychange fallback (optional)
-    // (Some Android WebViews behave differently; popstate should normally fire.)
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
-        // nothing destructive here — just a safe hook if you want extra handling
-      }
-    });
-  });
-})();
 </script>
 <script>
 // ==== PROFILE MODAL FIX ====
@@ -1434,14 +1338,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 </script>
 <script>
-// 🛡 Kickout only from Home page
-window.addEventListener('popstate', () => {
-  const currentPage = window.location.pathname.split('/').pop();
-  if (currentPage === 'home.html') {
-    // If the user presses back on home page → exit site
-    window.location.replace('https://rajputpankaj3737-a11y.github.io/kitsune/');
-  }
-});
+/* 🧭 Smart Back Navigation for Kitsune */
+
+(function() {
+  const EXIT_URL = "https://rajputpankaj3737-a11y.github.io/kitsune/";
+
+  // Push one clean state so the first back goes to EXIT_URL instead of weird states
+  window.addEventListener("load", () => {
+    history.replaceState({kitsuneHome: true}, "", location.href);
+    history.pushState({kitsuneHome: true}, "", location.href);
+  });
+
+  // When user presses back:
+  window.addEventListener("popstate", (event) => {
+    const user = localStorage.getItem("kitsune_user");
+
+    // If they're logged in and on home page → exit site cleanly
+    if (window.location.pathname.endsWith("index.html") || window.location.pathname === "/") {
+      window.location.replace(EXIT_URL);
+    } else {
+      // If not on home page, go back to home (not random pages)
+      window.location.href = "index.html";
+    }
+  });
+})();
 </script>
 </body>
 </html>
