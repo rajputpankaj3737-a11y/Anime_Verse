@@ -123,96 +123,88 @@ body {
       transform: scale(1.05);
       box-shadow: 0 4px 12px rgba(124, 92, 255, 0.5);
     }
+    /* ====== Hero section (Smooth + Blended Background) ====== */
+/* ====== Hero section (Glass-blur + soft visibility) ====== */
+.hero {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 100px 20px;
+  width: 100%;
+  min-height: 90vh;
+  overflow: hidden;
 
-    /* ====== Hero section ====== */
-    .hero {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      padding: 80px 60px;
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.9)),
-        url("https://images.unsplash.com/photo-1601758123927-1960f60f365c?auto=format&fit=crop&w=1600&q=80")
-          center/cover no-repeat;
-      background-blend-mode: overlay;
-      border-radius: 20px;
-      margin: 40px auto;
-      width: 90%;
-      max-width: 1100px;
-    }
+  /* 🎨 Base anime background (slightly visible) */
+  background: url("Image & logo/wp5203548.jpg") center/cover no-repeat;
+}
 
-    .hero-text {
-      max-width: 600px;
-    }
+/* 🔮 Add soft blur-glass layer */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(8px);
+  background: rgba(11, 18, 32, 0.65); /* dark semi-transparent overlay */
+  z-index: 1;
+}
 
-   .hero-text h1 {
+/* Hero content */
+.hero-text {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  color: #fff;
+}
+
+.hero-text h1 {
   font-size: 3rem;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   background: linear-gradient(90deg, #ff6b81, #7c5cff);
   -webkit-background-clip: text;
-  background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent;
 }
-    .hero-text p {
-      font-size: 1.1rem;
-      color: #cbd5e1;
-      margin-bottom: 25px;
-    }
 
-    .hero-text button {
-      background: linear-gradient(90deg, #ff6b81, #7c5cff);
-      border: none;
-      color: #fff;
-      padding: 12px 28px;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+.hero-text p {
+  font-size: 1.1rem;
+  color: #d1d5db;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
 
-    .hero-text button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 15px rgba(124, 92, 255, 0.5);
-    }
+.hero-text button {
+  background: linear-gradient(90deg, #ff6b81, #7c5cff);
+  border: none;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    .hero img {
-      width: 350px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255, 107, 129, 0.3);
-    }
+.hero-text button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(124, 92, 255, 0.5);
+}
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      margin-top: auto;
-      font-size: 0.9rem;
-      color: #94a3b8;
-    }
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .hero {
+    padding: 70px 15px;
+    min-height: 80vh;
+  }
 
-    /* ===== Responsive tweaks ===== */
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        gap: 10px;
-        padding: 15px 20px;
-      }
+  .hero-text h1 {
+    font-size: 2.2rem;
+  }
 
-      .hero {
-        flex-direction: column;
-        text-align: center;
-        padding: 60px 30px;
-      }
-
-      .hero-text h1 {
-        font-size: 2.2rem;
-      }
-
-      .hero img {
-        width: 90%;
-        margin-top: 30px;
-      }
-    }
+  .hero-text p {
+    font-size: 1rem;
+  }
+}   
   </style>
 </head>
 <body>
@@ -230,10 +222,6 @@ body {
       </p>
       <button class="signin-btn" onclick="window.location.href='signin.html'">Explore Now</button>
     </div>
-    <img
-      src="Image & logo/wp5203548.jpg"
-      alt="Anime"
-    />
   </section>
 
   <footer>© 2025 Kitsune | All rights reserved.</footer>
