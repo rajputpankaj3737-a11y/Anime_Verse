@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect World — Episode 1 | Kitsune</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* 🌐 Global Responsive Fixes for Mobile */
+
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Header and logo alignment */
+        header {
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 12px 16px;
+        }
+
+        .logo-img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+        }
+
+        /* Search bar fix */
+        .search {
+            width: 90%;
+            min-width: unset;
+            margin: 10px auto;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Anime cards fix for mobile */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 10px;
+        }
+
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        .thumb {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Title and rating alignment */
+        .card-body {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .card-meta {
+            font-size: 11px;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* Episode page video fix */
+        iframe {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+        }
+
+        /* Profile & community modal responsiveness */
+        .profile-modal,
+        .community-content {
+            width: 90%;
+            max-width: 360px;
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .profile-modal img {
+            width: 90px;
+            height: 90px;
+        }
+
+        :root {
+            --accent1: #ff6b81;
+            --accent2: #7c5cff;
+            --bg: #0b1220;
+            --card: rgba(255, 255, 255, 0.05);
+            --text: #e6eef8;
+            --muted: #98a0b3;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(180deg, #071023 0%, #081126 80%);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 22px;
+            background: rgba(11, 18, 32, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        header a {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .banner {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), #0b1220),
+                url("../../Image & logo/perfect world.avif") center/cover no-repeat;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .banner h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent2);
+        }
+
+        .info-box {
+            max-width: 900px;
+            margin: 20px auto;
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(124, 92, 255, 0.2);
+        }
+
+        .info-box p {
+            line-height: 1.6;
+            color: var(--muted);
+        }
+
+        /* 🎥 Video */
+        .video-box {
+            max-width: 900px;
+            margin: 30px auto;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(124, 92, 255, 0.4);
+            aspect-ratio: 16 / 9;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Episode navigation */
+        .episode-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px auto;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            color: #071023;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--accent2);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            margin: 40px 0;
+        }
+
+        @media (max-width: 768px) {
+            .banner {
+                height: 220px;
+                padding: 20px;
+            }
+
+            .banner h2 {
+                font-size: 22px;
+            }
+
+            .info-box {
+                width: 90%;
+            }
+        }
+
+        /* 🎬 Episode navigation buttons */
+        .episode-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px auto;
+            max-width: 700px;
+            width: 90%;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(90deg, #ff6b81, #7c5cff);
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 107, 129, 0.6);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Perfect World</h1>
+        <a href="../../home.html">🏠 Home</a>
+    </header>
+
+    <section class="banner">
+        <h2>Episode 1 — The Beginning of the Journey</h2>
+    </section>
+
+    <section class="info-box">
+        <p>
+            Shi Hao, a gifted child born in a remote village in the Stone Country.
+             From birth, he possesses extraordinary talent and a mysterious destiny tied to
+              ancient powers. However, his journey is far from smooth — he faces betrayal, 
+              separation, war, and loss, pushing him to rise from nothing to become a being
+               who can defy fate, time, and the heavens themselves.
+
+            As Shi Hao grows, he travels through dangerous realms, sacred mountains, and
+             immortal worlds, seeking strength and truth about his origins. His ultimate goal 
+             is to create a Perfect World — a place free from sorrow, death, and decay.
+        </p>
+    </section>
+
+    <!-- 🎥 Your YouTube video -->
+    <div class="video-box">
+        <iframe width="1427" height="606" src="https://www.youtube.com/embed/ZVlrYv_3Dek" 
+        title="ENG SUB | Perfect World EP01 | The growth of the little baby begins here! | Tencent Video- ANIMATION" 
+        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+         gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <div class="episode-navigation">
+        <a href="episode11.html" class="nav-btn">Next Episode ➡</a>
+    </div>
+
+    <footer>
+        © 2025 Kitsune · Perfect World — Donghua Series
+    </footer>
+
+</body>
+
+</html>
