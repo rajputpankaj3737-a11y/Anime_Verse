@@ -35,9 +35,11 @@
       font-size: 1.6rem;
       font-weight: 700;
       background: linear-gradient(90deg, #ff6b81, #7c5cff);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
+      background-clip: text;            /* Standard property */
+      -webkit-background-clip: text;    /* Safari/WebKit support */
+      -webkit-text-fill-color: transparent;
+      color: transparent;               /* Fallback */
+}
 
     .nav-btn {
       background: linear-gradient(90deg, #ff6b81, #7c5cff);
@@ -64,10 +66,12 @@
     .hero h1 {
       font-size: 2.4rem;
       background: linear-gradient(90deg, #ff6b81, #7c5cff);
-      -webkit-background-clip: text;
-      color: transparent;
+      background-clip: text;            /* Standard property */
+      -webkit-background-clip: text;    /* Safari/WebKit support */
+      -webkit-text-fill-color: transparent;
+      color: transparent;               /* Fallback */
       margin-bottom: 12px;
-    }
+}
 
     .hero p {
       color: #cbd5e1;
@@ -131,9 +135,11 @@
       font-size: 1.6rem;
       margin-bottom: 15px;
       background: linear-gradient(90deg, #ff6b81, #7c5cff);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
+      background-clip: text;            /* Standard property */
+      -webkit-background-clip: text;    /* Safari/WebKit support */
+      -webkit-text-fill-color: transparent;
+      color: transparent;               /* Fallback */
+}
 
     .scroll-wrapper {
       display: flex;
@@ -214,7 +220,7 @@
 <body>
   <header>
     <div class="logo">Kitsune</div>
-    <button class="nav-btn" onclick="location.href='../home.html'">Home</button>
+    <button class="nav-btn" onclick="location.href='../../home.html'">Home</button>
   </header>
 
   <section class="hero">
@@ -243,34 +249,12 @@
 
   <section class="episode-list">
     <h2>All Episodes</h2>
-    <div class="scroll-wrapper">
-      <div class="ep-card" onclick="location.href='episode1.html'">
-        <img src="../../Image & logo/Throne Of Seal.jpg" alt="Ep1">
-        <h4>Episode 1 — The Awakening</h4>
-        <p>Released: Oct 28 2025</p>
-      </div>
-      <div class="ep-card" onclick="location.href='episode2.html'">
-        <img src="../../Image & logo/Throne Of Seal.jpg" alt="Ep2">
-        <h4>Episode 2 — The Knight’s Oath</h4>
-        <p>Released: Oct 30 2025</p>
-      </div>
-      <div class="ep-card" onclick="location.href='episode3.html'">
-        <img src="../../Image & logo/Throne Of Seal.jpg" alt="Ep3">
-        <h4>Episode 3 — Power of the Seal</h4>
-        <p>Coming Soon</p>
-      </div>
-      <div class="ep-card">
-        <img src="../../Image & logo/Throne Of Seal.jpg" alt="Ep4">
-        <h4>Episode 4 — Temple Trials</h4>
-        <p>Coming Soon</p>
-      </div>
-      <div class="ep-card">
-        <img src="../../Image & logo/Throne Of Seal.jpg" alt="Ep5">
-        <h4>Episode 5 — Clash of Demons</h4>
-        <p>Coming Soon</p>
-      </div>
+    <div id="episode-list-container">
+      Loading episodes...
     </div>
   </section>
+
+  <script src="shared-episodes.js"></script>
 
   <footer>© 2025 Kitsune | All rights reserved.</footer>
 </body>

@@ -1423,13 +1423,19 @@
   .card-title {
     font-size: 12px;
     line-height: 1.2;
-    height: 30px; /* keeps same height for all cards */
+    height: 30px;                     /* keeps same height for all cards */
     overflow: hidden;
     text-overflow: ellipsis;
+    /* Modern browsers */
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    display: box;                     /* Standard */
+    -webkit-line-clamp: 2;           /* WebKit */
+    line-clamp: 2;                   /* Standard */
     -webkit-box-orient: vertical;
-  }
+    box-orient: vertical;            /* Standard */
+    /* Fallback */
+    max-height: 2.4em;               /* 2 lines × 1.2 line height */
+}
 
   .card-meta {
     font-size: 10px;
@@ -1483,13 +1489,19 @@
   .card-title {
     font-size: 12px;
     line-height: 1.2;
-    height: 30px;
+    height: 30px;                     /* keeps same height for all cards */
     overflow: hidden;
     text-overflow: ellipsis;
+    /* Modern browsers */
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    display: box;                     /* Standard */
+    -webkit-line-clamp: 2;           /* WebKit */
+    line-clamp: 2;                   /* Standard */
     -webkit-box-orient: vertical;
-  }
+    box-orient: vertical;            /* Standard */
+    /* Fallback */
+    max-height: 2.4em;               /* 2 lines × 1.2 line height */
+}
 
   .card-meta {
     font-size: 10px;
