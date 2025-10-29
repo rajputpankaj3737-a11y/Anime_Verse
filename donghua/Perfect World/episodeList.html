@@ -1,0 +1,117 @@
+<!-- episodeList.html -->
+<style>
+/* Styles scoped for the injected episode list */
+#episode-list-root { margin: 22px 0; max-width: 1100px; }
+#episode-list-root .section-title { 
+  font-size: 1.25rem; 
+  color: #ff8ec7; 
+  margin-bottom: 12px;
+  font-weight:700;
+}
+.scroll-wrapper {
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  padding:12px 6px;
+  -webkit-overflow-scrolling:touch;
+}
+.scroll-wrapper::-webkit-scrollbar{ height:8px; }
+.scroll-wrapper::-webkit-scrollbar-thumb{
+  background: linear-gradient(90deg,#7c5cff,#ff6b81);
+  border-radius:6px;
+}
+.ep-card {
+  flex: 0 0 180px;
+  background: rgba(255,255,255,0.03);
+  border-radius:12px;
+  overflow:hidden;
+  border: 1px solid rgba(124,92,255,0.12);
+  cursor:pointer;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.ep-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(124,92,255,0.16);
+  border-color: rgba(124,92,255,0.25);
+}
+.ep-thumb {
+  width:100%;
+  height:110px;
+  background-size:cover;
+  background-position:center;
+}
+.ep-card-body { padding:10px; }
+.ep-title { font-size:0.95rem; margin-bottom:6px; color:#fff; font-weight:700; }
+.ep-sub { font-size:0.85rem; color:#b9c0d6; }
+
+/* small screens: make cards slightly narrower or 3 in row on small phones if required by container */
+@media (max-width: 480px) {
+  .ep-card { flex: 0 0 140px; }
+  .ep-thumb { height:100px; }
+}
+</style>
+
+<div id="episode-list-root" aria-label="All episodes">
+  <div class="section-title">All Episodes</div>
+
+  <div class="scroll-wrapper">
+    <!-- copy / edit the blocks below to add/remove episodes -->
+    <div class="ep-card" onclick="location.href='episode1.html'">
+      <div class="ep-thumb" style="background-image:url('../../Image & logo/Throne Of Seal.jpg')"></div>
+      <div class="ep-card-body">
+        <div class="ep-title">Episode 1 — The Awakening</div>
+        <div class="ep-sub">Released: Oct 28, 2025</div>
+      </div>
+    </div>
+
+    <div class="ep-card" onclick="location.href='episode2.html'">
+      <div class="ep-thumb" style="background-image:url('../../Image & logo/Throne Of Seal.jpg')"></div>
+      <div class="ep-card-body">
+        <div class="ep-title">Episode 2 — The Knight’s Oath</div>
+        <div class="ep-sub">Released: Oct 30, 2025</div>
+      </div>
+    </div>
+
+    <div class="ep-card" onclick="location.href='episode3.html'">
+      <div class="ep-thumb" style="background-image:url('../../Image & logo/Throne Of Seal.jpg')"></div>
+      <div class="ep-card-body">
+        <div class="ep-title">Episode 3 — Power of the Seal</div>
+        <div class="ep-sub">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="ep-card" onclick="location.href='episode3.html'">
+      <div class="ep-thumb" style="background-image:url('../../Image & logo/Throne Of Seal.jpg')"></div>
+      <div class="ep-card-body">
+        <div class="ep-title">Episode 4 — Clash of demons</div>
+        <div class="ep-sub">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="ep-card" onclick="location.href='episode3.html'">
+      <div class="ep-thumb" style="background-image:url('../../Image & logo/Throne Of Seal.jpg')"></div>
+      <div class="ep-card-body">
+        <div class="ep-title">Episode 5 — Divine Throne</div>
+        <div class="ep-sub">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="ep-card" onclick="location.href='episode3.html'">
+      <div class="ep-thumb" style="background-image:url('../../Image & logo/Throne Of Seal.jpg')"></div>
+      <div class="ep-card-body">
+        <div class="ep-title">Episode 6 —Seal Realese</div>
+        <div class="ep-sub">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="ep-card" onclick="location.href='episode3.html'">
+      <div class="ep-thumb" style="background-image:url('../../Image & logo/Throne Of Seal.jpg')"></div>
+      <div class="ep-card-body">
+        <div class="ep-title">Episode 7 — Demon Emperor</div>
+        <div class="ep-sub">Coming Soon</div>
+      </div>
+    </div>
+
+    <!-- add more .ep-card blocks here; path in onclick should match the episode file -->
+  </div>
+</div>
