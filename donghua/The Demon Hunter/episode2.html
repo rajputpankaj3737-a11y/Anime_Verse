@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>The Demon Hunter — Episode 2 | Kitsune</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(180deg, #0f172a 0%, #1e1b29 100%);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ff6b81, #7c5cff);
+      background-clip: text;
+      /* Standard property */
+      -webkit-background-clip: text;
+      /* Safari/WebKit support */
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      /* Fallback */
+    }
+
+    .nav-btn {
+      background: linear-gradient(90deg, #ff6b81, #7c5cff);
+      border: none;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-btn:hover {
+      opacity: 0.85;
+    }
+
+    /* Title & Description */
+    .hero {
+      text-align: center;
+      padding: 60px 20px 30px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      background: linear-gradient(90deg, #ff6b81, #7c5cff);
+      background-clip: text;
+      /* Standard property */
+      -webkit-background-clip: text;
+      /* Safari/WebKit support */
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      /* Fallback */
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      line-height: 1.6;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+
+    /* Video Player */
+    .video-container {
+      width: 90%;
+      max-width: 900px;
+      margin: 20px auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(124, 92, 255, 0.4);
+    }
+
+    .video-container iframe {
+      width: 100%;
+      height: 480px;
+      border: none;
+    }
+
+    /* Next & Previous Episode Arrows */
+    .nav-arrows {
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+      max-width: 900px;
+      margin: 10px auto 40px;
+    }
+
+    .arrow {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6b81, #7c5cff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: .3s;
+    }
+
+    .arrow:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 12px rgba(124, 92, 255, 0.8);
+    }
+
+    /* Episode List */
+    .episode-list {
+      width: 90%;
+      max-width: 1000px;
+      margin: 0 auto 80px;
+    }
+
+    .episode-list h2 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #ff6b81, #7c5cff);
+      background-clip: text;
+      /* Standard property */
+      -webkit-background-clip: text;
+      /* Safari/WebKit support */
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      /* Fallback */
+    }
+
+    .scroll-wrapper {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    .scroll-wrapper::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .scroll-wrapper::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, #7c5cff, #ff6b81);
+      border-radius: 4px;
+    }
+
+    .ep-card {
+      flex: 0 0 180px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(124, 92, 255, 0.25);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .ep-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(124, 92, 255, 0.6);
+    }
+
+    .ep-card img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+    }
+
+    .ep-card h4 {
+      font-size: 1rem;
+      margin: 8px 10px 2px;
+    }
+
+    .ep-card p {
+      font-size: 0.85rem;
+      margin: 0 10px 10px;
+      color: #94a3b8;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #94a3b8;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Responsive */
+    @media(max-width:768px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .video-container iframe {
+        height: 260px;
+      }
+
+      .ep-card {
+        flex: 0 0 150px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">Kitsune</div>
+    <button class="nav-btn" onclick="location.href='../../home.html'">Home</button>
+  </header>
+
+  <section class="hero">
+    <h1>The Demon Hunter — Episode 2</h1>
+    <p>
+         Meng Chuan, who from a young age vows to avenge his mother’s death, training at the
+         Jinghu Taoist Temple and later ascending in power as he battles demons, cultivates,
+         and aims to become a legend in his world.
+    </p>
+    <p><strong>Genre:</strong> Action, Fantasy, Adventure | <strong>Released:</strong> 2025</p>
+  </section>
+
+  <div class="video-container">
+    <iframe width="1020" height="574"
+      src="https://www.youtube.com/embed/"
+      title="The Great Ruler | EP2: The Great Buddha art | iQIYI Anime【Subscribe to watch latest】" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; 
+    picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+
+  <div class="nav-arrows">
+    <div class="arrow" onclick="location.href='episode1.html'">⏮</div>
+    <div class="arrow" onclick="location.href='episode3.html'">⏭</div>
+  </div>
+
+  <section class="episode-list">
+    <h2>All Episodes</h2>
+    <div id="episode-list-container">
+      Loading episodes...
+    </div>
+  </section>
+
+  <script src="shared-episodes.js"></script>
+
+  <footer>© 2025 Kitsune | All rights reserved.</footer>
+</body>
+
+</html>
