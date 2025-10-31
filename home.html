@@ -1520,6 +1520,61 @@
     box-shadow: 0 0 8px rgba(124, 92, 255, 0.4);
   }
 }
+
+/* Search dropdown */
+.results-container {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 280px;
+  background: rgba(10, 10, 20, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(124, 92, 255, 0.5);
+  max-height: 400px;
+  overflow-y: auto;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.results-container.active {
+  display: block;
+  opacity: 1;
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.result-item:hover {
+  background: rgba(124, 92, 255, 0.2);
+}
+
+.result-item img {
+  width: 50px;
+  height: 65px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.result-info h4 {
+  color: #fff;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.result-info p {
+  color: #aaa;
+  margin: 3px 0 0;
+  font-size: 0.8rem;
+}
   </style>
 </head>
 
@@ -1552,16 +1607,6 @@
         </div>
       </div>
 
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Explore</a></li>
-          <li><a href="#">Community</a></li>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#" id="genreToggle">Genres</a></li>
-        </ul>
-      </nav>
-
       <div style="display:flex;align-items:center;gap:12px">
         <div class="search" role="search">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -1569,6 +1614,7 @@
               stroke-linejoin="round" />
           </svg>
           <input id="searchInput" placeholder="Search anime, e.g. 'Shounen'">
+          <div id="searchResults" class="results-container"></div>
         </div>
 
         <div class="icons">
@@ -1631,7 +1677,7 @@
 
         <a href="donghua/Soul Land 2/episode1.html" style="text-decoration:none;color:inherit;">
           <article class="card">
-            <div class="thumb" style="background-image:url('Image & logo/soul land 2.jpg')"></div>
+            <div class="thumb" style="background-image:url('Image & logo/SOUL LAND 2.jpeg')"></div>
             <div class="card-body">
               <div class="card-title">Soul Land 2</div>
               <div class="card-meta">
@@ -1670,7 +1716,7 @@
 
         <a href="donghua/Renegade Immortal/episode1.html" style="text-decoration:none;color:inherit;">
           <article class="card">
-            <div class="thumb" style="background-image:url('Image & logo/Renegade Immortal.jpg')"></div>
+            <div class="thumb" style="background-image:url('Image & logo/Renegade_Immortal.jpg')"></div>
             <div class="card-body">
               <div class="card-title">Renegade Immortal</div>
               <div class="card-meta">
@@ -2008,6 +2054,59 @@
       });
     })();
   </script>
+
+  <script>
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+
+// Fetch from your JSON file
+let animeList = [];
+
+fetch("data/searchData.json")
+  .then(res => res.json())
+  .then(data => animeList = data)
+  .catch(err => console.error("Error loading searchData.json:", err));
+
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.trim().toLowerCase();
+  searchResults.innerHTML = "";
+
+  if (!query) {
+    searchResults.classList.remove("active");
+    return;
+  }
+
+  const filtered = animeList.filter(anime =>
+    anime.title.toLowerCase().includes(query)
+  );
+
+  if (filtered.length === 0) {
+    searchResults.innerHTML = <p style="color:#bbb;padding:10px;text-align:center;">No results found</p>;
+  } else {
+    filtered.forEach(anime => {
+      const item = document.createElement("div");
+      item.classList.add("result-item");
+      item.innerHTML = `
+        <img src="${anime.image}" alt="${anime.title}">
+        <div class="result-info">
+          <h4>${anime.title}</h4>
+          <p>${anime.genre || ""}</p>
+        </div>
+      `;
+      item.addEventListener("click", () => window.location.href = anime.link);
+      searchResults.appendChild(item);
+    });
+  }
+
+  searchResults.classList.add("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!searchResults.contains(e.target) && e.target !== searchInput) {
+    searchResults.classList.remove("active");
+  }
+});
+</script>
 </body>
 
 </html>
